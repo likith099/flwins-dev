@@ -1,9 +1,9 @@
-const { createServer } = require('http');
-const { parse } = require('url');
-const next = require('next');
+const { createServer } = require("http");
+const { parse } = require("url");
+const next = require("next");
 
-const dev = process.env.NODE_ENV !== 'production';
-const hostname = 'localhost';
+const dev = process.env.NODE_ENV !== "production";
+const hostname = "localhost";
 const port = process.env.PORT || 3000;
 
 // when using middleware `hostname` and `port` must be provided below
@@ -20,9 +20,9 @@ app.prepare().then(() => {
 
       await handle(req, res, parsedUrl);
     } catch (err) {
-      console.error('Error occurred handling', req.url, err);
+      console.error("Error occurred handling", req.url, err);
       res.statusCode = 500;
-      res.end('internal server error');
+      res.end("internal server error");
     }
   }).listen(port, (err) => {
     if (err) throw err;
