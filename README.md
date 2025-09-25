@@ -81,6 +81,16 @@ Before running the application, you need to configure an Azure AD App Registrati
    - Copy `.env.local.example` to `.env.local`
    - Update the environment variables with your Azure AD configuration:
 
+   **For Your FLWINS B2C Configuration:**
+   ```env
+   NEXT_PUBLIC_AZURE_AD_CLIENT_ID=0a37f565-9bea-4bdd-aacf-f0d8f909c096
+   NEXT_PUBLIC_AZURE_AD_AUTHORITY=https://flwins.ciamlogin.com/4cc02933-c81d-4fe9-9f71-850984769f51/v2.0
+   NEXT_PUBLIC_REDIRECT_URI=http://localhost:3001
+   NEXT_PUBLIC_KNOWN_AUTHORITY=flwins.ciamlogin.com
+   NEXT_PUBLIC_AUTHORITY_DOMAIN=flwins.ciamlogin.com
+   NEXT_PUBLIC_SIGN_UP_SIGN_IN_POLICY=B2C_1A_SIGNUP_SIGNIN
+   ```
+
    **For Regular Azure AD:**
    ```env
    NEXT_PUBLIC_AZURE_AD_CLIENT_ID=your_application_client_id

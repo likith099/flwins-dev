@@ -1,14 +1,13 @@
-import { Configuration, PopupRequest } from "@azure/msal-browser";
+import { Configuration, RedirectRequest } from "@azure/msal-browser";
 
-// MSAL configuration for Azure AD with User Flows
+// MSAL configuration for Azure AD B2C with External ID (Custom Domain)
 const msalConfig: Configuration = {
   auth: {
-    clientId: process.env.NEXT_PUBLIC_AZURE_AD_CLIENT_ID || "", // Your App Registration client ID
-    authority: process.env.NEXT_PUBLIC_AZURE_AD_AUTHORITY || "", // Your authority URL with user flow
-    redirectUri: process.env.NEXT_PUBLIC_REDIRECT_URI || "http://localhost:3000", // Redirect URI
+    clientId: process.env.NEXT_PUBLIC_AZURE_AD_CLIENT_ID || "0a37f565-9bea-4bdd-aacf-f0d8f909c096", // Your client ID from the URL
+    authority: process.env.NEXT_PUBLIC_AZURE_AD_AUTHORITY || "https://flwins.ciamlogin.com/4cc02933-c81d-4fe9-9f71-850984769f51/v2.0", // Your B2C authority
+    redirectUri: process.env.NEXT_PUBLIC_REDIRECT_URI || "http://localhost:3000", // Local development redirect
     knownAuthorities: [
-      // Add your B2C domain or tenant domain here
-      process.env.NEXT_PUBLIC_KNOWN_AUTHORITY || ""
+      "flwins.ciamlogin.com" // Your B2C custom domain
     ],
   },
   cache: {
@@ -40,10 +39,11 @@ const msalConfig: Configuration = {
   }
 };
 
-// Login request configuration for user flows
-export const loginRequest: PopupRequest = {
+// Login request configuration for Azure AD B2C External ID
+export const loginRequest = {
   scopes: ["openid", "profile", "email"], // Request user profile information
   prompt: "select_account", // Allow user to select account
+  redirectUri: process.env.NEXT_PUBLIC_REDIRECT_URI || "http://localhost:3001", // Ensure redirect URI matches
 };
 
 // Configuration for Microsoft Graph API (if needed)
@@ -51,18 +51,20 @@ export const graphConfig = {
   graphMeEndpoint: "https://graph.microsoft.com/v1.0/me",
 };
 
-// User flow configuration
+// B2C External ID configuration
 export const b2cPolicies = {
   names: {
-    signUpSignIn: process.env.NEXT_PUBLIC_SIGN_UP_SIGN_IN_POLICY || "",
+    signUpSignIn: process.env.NEXT_PUBLIC_SIGN_UP_SIGN_IN_POLICY || "B2C_1A_SIGNUP_SIGNIN", // Your user flow name
     editProfile: process.env.NEXT_PUBLIC_EDIT_PROFILE_POLICY || "",
   },
   authorities: {
     signUpSignIn: {
-      authority: process.env.NEXT_PUBLIC_AZURE_AD_AUTHORITY || "",
+      authority: process.env.NEXT_PUBLIC_AZURE_AD_AUTHORITY || "https://flwins.ciamlogin.com/4cc02933-c81d-4fe9-9f71-850984769f51/v2.0",
     },
   },
-  authorityDomain: process.env.NEXT_PUBLIC_AUTHORITY_DOMAIN || "",
+  authorityDomain: process.env.NEXT_PUBLIC_AUTHORITY_DOMAIN || "flwins.ciamlogin.com",
+  tenantName: "FLWINS",
+  tenantId: "4cc02933-c81d-4fe9-9f71-850984769f51"
 };
 
 export default msalConfig;

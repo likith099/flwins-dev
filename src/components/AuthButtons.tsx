@@ -11,19 +11,10 @@ export const SignInButton = () => {
   const handleLogin = async () => {
     setIsLoading(true);
     try {
-      // Use redirect instead of popup for better user flow experience
-      const response = await instance.loginPopup(loginRequest);
-      console.log("Login successful:", response);
+      // Use redirect instead of popup to open in the same tab
+      await instance.loginRedirect(loginRequest);
     } catch (error) {
       console.error("Login failed:", error);
-      // Handle specific error cases
-      if (error instanceof Error) {
-        if (error.message.includes("popup_window_error")) {
-          // Fallback to redirect if popup fails
-          await instance.loginRedirect(loginRequest);
-        }
-      }
-    } finally {
       setIsLoading(false);
     }
   };
@@ -60,17 +51,12 @@ export const SignOutButton = () => {
   const handleLogout = async () => {
     setIsLoading(true);
     try {
-      await instance.logoutPopup({
-        postLogoutRedirectUri: window.location.origin,
-        mainWindowRedirectUri: window.location.origin
-      });
-    } catch (error) {
-      console.error("Logout failed:", error);
-      // Fallback to redirect logout
+      // Use redirect logout to stay in the same tab
       await instance.logoutRedirect({
         postLogoutRedirectUri: window.location.origin,
       });
-    } finally {
+    } catch (error) {
+      console.error("Logout failed:", error);
       setIsLoading(false);
     }
   };
