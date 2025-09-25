@@ -5,10 +5,12 @@ const msalConfig: Configuration = {
   auth: {
     clientId: process.env.NEXT_PUBLIC_AZURE_AD_CLIENT_ID || "0a37f565-9bea-4bdd-aacf-f0d8f909c096", // Your client ID from the URL
     authority: process.env.NEXT_PUBLIC_AZURE_AD_AUTHORITY || "https://flwins.ciamlogin.com/4cc02933-c81d-4fe9-9f71-850984769f51/v2.0", // Your B2C authority
-    redirectUri: process.env.NEXT_PUBLIC_REDIRECT_URI || "http://localhost:3000", // Local development redirect
+    redirectUri: process.env.NEXT_PUBLIC_REDIRECT_URI || 
+      (typeof window !== 'undefined' ? window.location.origin : "http://localhost:3001"), // Redirect to home, then navigate to profile
     knownAuthorities: [
       "flwins.ciamlogin.com" // Your B2C custom domain
     ],
+    postLogoutRedirectUri: typeof window !== 'undefined' ? window.location.origin : "http://localhost:3001",
   },
   cache: {
     cacheLocation: "sessionStorage", // Cache location
@@ -16,7 +18,7 @@ const msalConfig: Configuration = {
   },
   system: {
     loggerOptions: {
-      loggerCallback: (level, message, containsPii) => {
+      loggerCallback: (level: number, message: string, containsPii: boolean) => {
         if (containsPii) {
           return;
         }
@@ -43,7 +45,11 @@ const msalConfig: Configuration = {
 export const loginRequest = {
   scopes: ["openid", "profile", "email"], // Request user profile information
   prompt: "select_account", // Allow user to select account
-  redirectUri: process.env.NEXT_PUBLIC_REDIRECT_URI || "http://localhost:3001", // Ensure redirect URI matches
+  redirectUri: process.env.NEXT_PUBLIC_REDIRECT_URI || 
+    (typeof window !== 'undefined' ? window.location.origin : "http://localhost:3001"), // Redirect to home, then navigate to profile
+  extraQueryParameters: {
+    response_mode: "query" // Use query mode for B2C compatibility
+  }
 };
 
 // Configuration for Microsoft Graph API (if needed)

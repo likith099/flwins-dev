@@ -53,69 +53,34 @@ export const ProfileContent = () => {
                 </span>
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                Welcome back!
+                Welcome back, {userInfo?.displayName || userInfo?.name || "User"}!
               </h2>
               
-              {/* User Information Display */}
-              <div className="space-y-3 text-left bg-gray-50 p-4 rounded-lg">
-                {userInfo?.displayName && (
-                  <div className="flex justify-between">
-                    <span className="font-semibold text-gray-600">Display Name:</span>
-                    <span className="text-gray-900">{userInfo.displayName}</span>
-                  </div>
-                )}
-                
-                {userInfo?.email && (
-                  <div className="flex justify-between">
-                    <span className="font-semibold text-gray-600">Email:</span>
-                    <span className="text-gray-900 truncate ml-2">{userInfo.email}</span>
-                  </div>
-                )}
+              <p className="text-gray-600 mb-6">
+                You are successfully logged in to FlWins.
+              </p>
 
-                {userInfo?.givenName && (
-                  <div className="flex justify-between">
-                    <span className="font-semibold text-gray-600">First Name:</span>
-                    <span className="text-gray-900">{userInfo.givenName}</span>
-                  </div>
-                )}
-
-                {userInfo?.surname && (
-                  <div className="flex justify-between">
-                    <span className="font-semibold text-gray-600">Last Name:</span>
-                    <span className="text-gray-900">{userInfo.surname}</span>
-                  </div>
-                )}
-
-                {userInfo?.jobTitle && (
-                  <div className="flex justify-between">
-                    <span className="font-semibold text-gray-600">Job Title:</span>
-                    <span className="text-gray-900">{userInfo.jobTitle}</span>
-                  </div>
-                )}
-
-                {userInfo?.id && (
-                  <div className="flex justify-between">
-                    <span className="font-semibold text-gray-600">User ID:</span>
-                    <span className="text-gray-900 text-xs truncate ml-2">{userInfo.id}</span>
-                  </div>
-                )}
-              </div>
-
-              {/* Account Information */}
-              <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-                <p className="text-sm text-blue-800">
+              {/* Quick Info */}
+              <div className="bg-gray-50 p-4 rounded-lg mb-6">
+                <p className="text-sm text-gray-600 mb-1">
+                  <strong>Email:</strong> {userInfo?.email || "Not available"}
+                </p>
+                <p className="text-sm text-gray-600">
                   <strong>Account Type:</strong> {account?.tenantId ? 'Work/School Account' : 'Personal Account'}
                 </p>
-                {account?.tenantId && (
-                  <p className="text-sm text-blue-800 mt-1">
-                    <strong>Tenant ID:</strong> {account.tenantId}
-                  </p>
-                )}
               </div>
-            </div>
-            
-            <div className="border-t pt-6">
-              <div className="text-center">
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a
+                  href="/profile"
+                  className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 flex items-center justify-center"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                  View Full Profile
+                </a>
                 <SignOutButton />
               </div>
             </div>
