@@ -20,7 +20,9 @@ A modern React application built with Next.js 15 and TypeScript, featuring Micro
 
 ## Azure AD Setup
 
-Before running the application, you need to configure an Azure AD App Registration:
+Before running the application, you need to configure an Azure AD App Registration. This application supports both regular Azure AD and Azure AD B2C with custom user flows.
+
+### Option 1: Regular Azure AD Setup
 
 1. **Create App Registration**:
    - Go to [Azure Portal](https://portal.azure.com/)
@@ -38,7 +40,29 @@ Before running the application, you need to configure an Azure AD App Registrati
 3. **Get Required Information**:
    - Copy the **Application (client) ID**
    - Copy the **Directory (tenant) ID**
-   - The authority URL will be: `https://login.microsoftonline.com/{tenant-id}`
+   - The authority URL will be: `https://login.microsoftonline.com/{tenant-id}/v2.0`
+
+### Option 2: Azure AD B2C with User Flows
+
+1. **Create B2C Tenant**:
+   - Create an Azure AD B2C tenant if you don't have one
+   - Note your tenant name (e.g., `yourcompany.onmicrosoft.com`)
+
+2. **Create User Flow**:
+   - In your B2C tenant, go to "User flows"
+   - Create a new "Sign up and sign in" user flow
+   - Configure the user attributes and claims you want to collect
+   - Note the user flow name (e.g., `B2C_1_signupsignin`)
+
+3. **Register Application**:
+   - Go to "App registrations" in your B2C tenant
+   - Create new registration with SPA platform
+   - Set redirect URI to: `http://localhost:3000`
+   - Enable "Access tokens" and "ID tokens"
+
+4. **Get Required Information**:
+   - Copy the **Application (client) ID**
+   - Your authority URL will be: `https://{tenant}.b2clogin.com/{tenant}.onmicrosoft.com/{policy-name}`
 
 ## Installation & Setup
 
@@ -56,10 +80,23 @@ Before running the application, you need to configure an Azure AD App Registrati
 3. **Environment Configuration**:
    - Copy `.env.local.example` to `.env.local`
    - Update the environment variables with your Azure AD configuration:
+
+   **For Regular Azure AD:**
    ```env
    NEXT_PUBLIC_AZURE_AD_CLIENT_ID=your_application_client_id
-   NEXT_PUBLIC_AZURE_AD_AUTHORITY=https://login.microsoftonline.com/your_tenant_id
+   NEXT_PUBLIC_AZURE_AD_AUTHORITY=https://login.microsoftonline.com/your_tenant_id/v2.0
    NEXT_PUBLIC_REDIRECT_URI=http://localhost:3000
+   NEXT_PUBLIC_KNOWN_AUTHORITY=login.microsoftonline.com
+   ```
+
+   **For Azure AD B2C with User Flows:**
+   ```env
+   NEXT_PUBLIC_AZURE_AD_CLIENT_ID=your_application_client_id
+   NEXT_PUBLIC_AZURE_AD_AUTHORITY=https://yourtenant.b2clogin.com/yourtenant.onmicrosoft.com/B2C_1_your_user_flow_name
+   NEXT_PUBLIC_REDIRECT_URI=http://localhost:3000
+   NEXT_PUBLIC_KNOWN_AUTHORITY=yourtenant.b2clogin.com
+   NEXT_PUBLIC_SIGN_UP_SIGN_IN_POLICY=B2C_1_your_user_flow_name
+   NEXT_PUBLIC_AUTHORITY_DOMAIN=yourtenant.b2clogin.com
    ```
 
 4. **Start the development server**:

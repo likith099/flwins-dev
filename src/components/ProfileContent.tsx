@@ -2,10 +2,39 @@
 
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from "@azure/msal-react";
 import { SignInButton, SignOutButton } from "./AuthButtons";
+import { useEffect, useState } from "react";
+
+interface UserInfo {
+  name?: string;
+  email?: string;
+  id?: string;
+  givenName?: string;
+  surname?: string;
+  jobTitle?: string;
+  displayName?: string;
+}
 
 export const ProfileContent = () => {
   const { accounts } = useMsal();
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+
   const account = accounts[0];
+
+  useEffect(() => {
+    if (account) {
+      // Extract user information from the account claims
+      const claims = account.idTokenClaims as Record<string, unknown>;
+      setUserInfo({
+        name: (claims?.name as string) || account.name,
+        email: (claims?.email as string) || (claims?.preferred_username as string) || account.username,
+        id: (claims?.oid as string) || (claims?.sub as string),
+        givenName: claims?.given_name as string,
+        surname: claims?.family_name as string,
+        jobTitle: claims?.jobTitle as string,
+        displayName: (claims?.name as string) || `${(claims?.given_name as string) || ''} ${(claims?.family_name as string) || ''}`.trim(),
+      });
+    }
+  }, [account]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -20,18 +49,69 @@ export const ProfileContent = () => {
             <div className="text-center">
               <div className="w-20 h-20 bg-blue-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                 <span className="text-white text-2xl font-bold">
-                  {account?.name?.charAt(0) || "U"}
+                  {userInfo?.displayName?.charAt(0) || userInfo?.name?.charAt(0) || "U"}
                 </span>
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">
                 Welcome back!
               </h2>
-              <p className="text-gray-600 mb-1">
-                <strong>Name:</strong> {account?.name || "Unknown"}
-              </p>
-              <p className="text-gray-600 mb-4">
-                <strong>Email:</strong> {account?.username || "Unknown"}
-              </p>
+              
+              {/* User Information Display */}
+              <div className="space-y-3 text-left bg-gray-50 p-4 rounded-lg">
+                {userInfo?.displayName && (
+                  <div className="flex justify-between">
+                    <span className="font-semibold text-gray-600">Display Name:</span>
+                    <span className="text-gray-900">{userInfo.displayName}</span>
+                  </div>
+                )}
+                
+                {userInfo?.email && (
+                  <div className="flex justify-between">
+                    <span className="font-semibold text-gray-600">Email:</span>
+                    <span className="text-gray-900 truncate ml-2">{userInfo.email}</span>
+                  </div>
+                )}
+
+                {userInfo?.givenName && (
+                  <div className="flex justify-between">
+                    <span className="font-semibold text-gray-600">First Name:</span>
+                    <span className="text-gray-900">{userInfo.givenName}</span>
+                  </div>
+                )}
+
+                {userInfo?.surname && (
+                  <div className="flex justify-between">
+                    <span className="font-semibold text-gray-600">Last Name:</span>
+                    <span className="text-gray-900">{userInfo.surname}</span>
+                  </div>
+                )}
+
+                {userInfo?.jobTitle && (
+                  <div className="flex justify-between">
+                    <span className="font-semibold text-gray-600">Job Title:</span>
+                    <span className="text-gray-900">{userInfo.jobTitle}</span>
+                  </div>
+                )}
+
+                {userInfo?.id && (
+                  <div className="flex justify-between">
+                    <span className="font-semibold text-gray-600">User ID:</span>
+                    <span className="text-gray-900 text-xs truncate ml-2">{userInfo.id}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Account Information */}
+              <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+                <p className="text-sm text-blue-800">
+                  <strong>Account Type:</strong> {account?.tenantId ? 'Work/School Account' : 'Personal Account'}
+                </p>
+                {account?.tenantId && (
+                  <p className="text-sm text-blue-800 mt-1">
+                    <strong>Tenant ID:</strong> {account.tenantId}
+                  </p>
+                )}
+              </div>
             </div>
             
             <div className="border-t pt-6">
