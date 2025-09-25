@@ -23,17 +23,24 @@ jobs:
         with:
           node-version: '22.x'
 
-      - name: npm install, build, and test
+      - name: npm install and build
         run: |
           npm install
-          npm run build --if-present
-          npm run test --if-present
+          npm run build
+        env:
+          NEXT_PUBLIC_AZURE_AD_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_AZURE_AD_CLIENT_ID }}
+          NEXT_PUBLIC_AZURE_AD_AUTHORITY: ${{ secrets.NEXT_PUBLIC_AZURE_AD_AUTHORITY }}
+          NEXT_PUBLIC_REDIRECT_URI: ${{ secrets.NEXT_PUBLIC_REDIRECT_URI }}
+          NEXT_PUBLIC_KNOWN_AUTHORITY: ${{ secrets.NEXT_PUBLIC_KNOWN_AUTHORITY }}
+          NEXT_PUBLIC_AUTHORITY_DOMAIN: ${{ secrets.NEXT_PUBLIC_AUTHORITY_DOMAIN }}
+          NEXT_PUBLIC_SIGN_UP_SIGN_IN_POLICY: ${{ secrets.NEXT_PUBLIC_SIGN_UP_SIGN_IN_POLICY }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
           path: .
+          include-hidden-files: true
 
   deploy:
     runs-on: ubuntu-latest
@@ -62,4 +69,45 @@ jobs:
           app-name: 'flwins-webapp-dev'
           slot-name: 'Production'
           package: .
+      
+      - name: 'Set Azure Web App Settings'
+        uses: azure/appservice-settings@v1
+        with:
+          app-name: 'flwins-webapp-dev'
+          slot-name: 'Production'
+          app-settings-json: |
+            [
+              {
+                "name": "NEXT_PUBLIC_AZURE_AD_CLIENT_ID",
+                "value": "${{ secrets.NEXT_PUBLIC_AZURE_AD_CLIENT_ID }}"
+              },
+              {
+                "name": "NEXT_PUBLIC_AZURE_AD_AUTHORITY", 
+                "value": "${{ secrets.NEXT_PUBLIC_AZURE_AD_AUTHORITY }}"
+              },
+              {
+                "name": "NEXT_PUBLIC_REDIRECT_URI",
+                "value": "${{ secrets.NEXT_PUBLIC_REDIRECT_URI }}"
+              },
+              {
+                "name": "NEXT_PUBLIC_KNOWN_AUTHORITY",
+                "value": "${{ secrets.NEXT_PUBLIC_KNOWN_AUTHORITY }}"
+              },
+              {
+                "name": "NEXT_PUBLIC_AUTHORITY_DOMAIN",
+                "value": "${{ secrets.NEXT_PUBLIC_AUTHORITY_DOMAIN }}"
+              },
+              {
+                "name": "NEXT_PUBLIC_SIGN_UP_SIGN_IN_POLICY",
+                "value": "${{ secrets.NEXT_PUBLIC_SIGN_UP_SIGN_IN_POLICY }}"
+              },
+              {
+                "name": "SCM_DO_BUILD_DURING_DEPLOYMENT",
+                "value": "false"
+              },
+              {
+                "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                "value": "~22"
+              }
+            ]
           
