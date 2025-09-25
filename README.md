@@ -1,36 +1,163 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FlWins - React Application with Azure AD Authentication
 
-## Getting Started
+A modern React application built with Next.js 15 and TypeScript, featuring Microsoft Azure AD authentication for secure login and user management.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Modern React Architecture**: Built with Next.js 15 and React 19
+- **Azure AD Authentication**: Secure login/logout using Microsoft Azure Active Directory
+- **TypeScript Support**: Full TypeScript implementation for type safety
+- **Tailwind CSS**: Modern, responsive UI styling
+- **User Profile Management**: Display authenticated user information
+- **Responsive Design**: Mobile-first approach with beautiful UI components
+
+## Prerequisites
+
+- **Node.js**: Version 22 LTS or higher
+- **npm**: Package manager (included with Node.js)
+- **Microsoft Azure Account**: For Azure AD app registration
+- **Git**: For version control
+
+## Azure AD Setup
+
+Before running the application, you need to configure an Azure AD App Registration:
+
+1. **Create App Registration**:
+   - Go to [Azure Portal](https://portal.azure.com/)
+   - Navigate to "Azure Active Directory" > "App registrations" > "New registration"
+   - Enter a name for your application (e.g., "FlWins App")
+   - Select "Accounts in this organizational directory only" (single tenant)
+   - Set redirect URI to: `http://localhost:3000` (for development)
+
+2. **Configure Authentication**:
+   - In your app registration, go to "Authentication"
+   - Add platform → "Single-page application (SPA)"
+   - Add redirect URI: `http://localhost:3000`
+   - Enable "Access tokens" and "ID tokens" under "Implicit grant and hybrid flows"
+
+3. **Get Required Information**:
+   - Copy the **Application (client) ID**
+   - Copy the **Directory (tenant) ID**
+   - The authority URL will be: `https://login.microsoftonline.com/{tenant-id}`
+
+## Installation & Setup
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/likith099/flwins-dev.git
+   cd flwins-dev
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Environment Configuration**:
+   - Copy `.env.local.example` to `.env.local`
+   - Update the environment variables with your Azure AD configuration:
+   ```env
+   NEXT_PUBLIC_AZURE_AD_CLIENT_ID=your_application_client_id
+   NEXT_PUBLIC_AZURE_AD_AUTHORITY=https://login.microsoftonline.com/your_tenant_id
+   NEXT_PUBLIC_REDIRECT_URI=http://localhost:3000
+   ```
+
+4. **Start the development server**:
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser**:
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── globals.css          # Global styles
+│   ├── layout.tsx           # Root layout with MSAL provider
+│   └── page.tsx             # Main page component
+├── components/
+│   ├── AuthButtons.tsx      # Sign in/out buttons
+│   ├── MSALWrapper.tsx      # MSAL provider wrapper
+│   └── ProfileContent.tsx   # Main authentication UI
+└── lib/
+    └── authConfig.ts        # MSAL configuration
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies Used
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework**: Next.js 15.5
+- **React**: Version 19
+- **Authentication**: Microsoft Authentication Library (MSAL)
+- **Styling**: Tailwind CSS
+- **Language**: TypeScript
+- **Build Tool**: Turbopack
+- **Node.js**: Version 22 LTS
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Authentication Flow
 
-## Learn More
+1. **Unauthenticated Users**: See a welcome screen with "Sign in with Microsoft" button
+2. **Authentication Process**: Clicking the sign-in button opens Microsoft's authentication popup
+3. **Authenticated Users**: See their profile information with name, email, and sign-out option
+4. **Sign Out**: Users can sign out, which clears their session and returns to the welcome screen
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Development
+The application is configured for local development with `http://localhost:3000` as the redirect URI.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Production
+1. Update your Azure AD app registration with your production domain
+2. Update the `NEXT_PUBLIC_REDIRECT_URI` environment variable
+3. Build and deploy using your preferred hosting platform
 
-## Deploy on Vercel
+## Troubleshooting
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Common Issues
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **"Invalid redirect URI"**: 
+   - Ensure the redirect URI in your Azure AD app registration matches your application URL
+   - Check that `NEXT_PUBLIC_REDIRECT_URI` environment variable is correct
+
+2. **"Application not found"**:
+   - Verify your `NEXT_PUBLIC_AZURE_AD_CLIENT_ID` is correct
+   - Ensure the application is enabled in Azure AD
+
+3. **Authentication popup blocked**:
+   - Allow popups for your domain in browser settings
+   - Consider implementing redirect-based authentication instead
+
+### Environment Variables
+
+Make sure all required environment variables are set in `.env.local`:
+
+```env
+NEXT_PUBLIC_AZURE_AD_CLIENT_ID=your_client_id
+NEXT_PUBLIC_AZURE_AD_AUTHORITY=https://login.microsoftonline.com/your_tenant_id
+NEXT_PUBLIC_REDIRECT_URI=http://localhost:3000
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature-name`
+3. Commit your changes: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin feature/your-feature-name`
+5. Open a pull request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+For support and questions, please open an issue on the [GitHub repository](https://github.com/likith099/flwins-dev/issues).
