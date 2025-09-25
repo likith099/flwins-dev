@@ -34,6 +34,7 @@ jobs:
           NEXT_PUBLIC_KNOWN_AUTHORITY: ${{ secrets.NEXT_PUBLIC_KNOWN_AUTHORITY }}
           NEXT_PUBLIC_AUTHORITY_DOMAIN: ${{ secrets.NEXT_PUBLIC_AUTHORITY_DOMAIN }}
           NEXT_PUBLIC_SIGN_UP_SIGN_IN_POLICY: ${{ secrets.NEXT_PUBLIC_SIGN_UP_SIGN_IN_POLICY }}
+          NEXT_PUBLIC_EFSMOD_URL: ${{ secrets.NEXT_PUBLIC_EFSMOD_URL }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -100,6 +101,10 @@ jobs:
               {
                 "name": "NEXT_PUBLIC_SIGN_UP_SIGN_IN_POLICY",
                 "value": "${{ secrets.NEXT_PUBLIC_SIGN_UP_SIGN_IN_POLICY }}"
+              },
+              {
+                "name": "NEXT_PUBLIC_EFSMOD_URL",
+                "value": "${{ secrets.NEXT_PUBLIC_EFSMOD_URL }}"
               },
               {
                 "name": "SCM_DO_BUILD_DURING_DEPLOYMENT",
