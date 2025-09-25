@@ -2,7 +2,7 @@ name: Build and deploy EFAMod Portal to Azure App Service
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -14,7 +14,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
+          node-version: "22.x"
 
       - name: Install and build
         run: |
@@ -59,14 +59,14 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ secrets.EFAMOD_APP_SERVICE_NAME }}
-          slot-name: 'Production'
+          slot-name: "Production"
           package: .
 
       - name: Set Azure App Settings
         uses: azure/appservice-settings@v1
         with:
           app-name: ${{ secrets.EFAMOD_APP_SERVICE_NAME }}
-          slot-name: 'Production'
+          slot-name: "Production"
           app-settings-json: |
             [
               { "name": "NEXT_PUBLIC_AZURE_AD_TENANT_ID", "value": "${{ secrets.EFAMOD_AZURE_AD_TENANT_ID }}" },
