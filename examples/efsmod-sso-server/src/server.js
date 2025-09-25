@@ -19,12 +19,12 @@ function parseAuthority(authority) {
   // e.g. https://domain/tenantIdOrName/v2.0
   try {
     const u = new URL(authority);
-    const parts = u.pathname.replace(/^\//, '').split('/');
+    const parts = u.pathname.replace(/^\//, "").split("/");
     const tenant = parts[0];
     const origin = `${u.protocol}//${u.host}`;
     return { origin, tenant };
   } catch {
-    return { origin: '', tenant: '' };
+    return { origin: "", tenant: "" };
   }
 }
 
@@ -46,16 +46,21 @@ async function verifyIdToken(idToken) {
   // Build allowed issuers (handle B2C tfp/acr variants)
   const baseIssuers = [expectedIssuer, expectedIssuer.replace(/\/$/, "")];
   const decoded = (() => {
-    try { return decodeJwt(idToken); } catch { return {}; }
+    try {
+      return decodeJwt(idToken);
+    } catch {
+      return {};
+    }
   })();
   const tfp = decoded?.tfp || decoded?.acr;
   const { origin, tenant } = parseAuthority(authority);
-  const tfpIssuers = tfp && origin && tenant
-    ? [
-        `${origin}/tfp/${tenant}/${tfp}/v2.0/`,
-        `${origin}/tfp/${tenant}/${tfp}/v2.0`,
-      ]
-    : [];
+  const tfpIssuers =
+    tfp && origin && tenant
+      ? [
+          `${origin}/tfp/${tenant}/${tfp}/v2.0/`,
+          `${origin}/tfp/${tenant}/${tfp}/v2.0`,
+        ]
+      : [];
 
   const allowedIssuers = [...baseIssuers, ...tfpIssuers];
 
