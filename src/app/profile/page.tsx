@@ -3,6 +3,7 @@
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from "@azure/msal-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { postForm } from "@/lib/postForm";
 
 interface UserInfo {
   name?: string;
@@ -48,6 +49,43 @@ export default function ProfilePage() {
 
   const handleBackToHome = () => {
     router.push('/');
+  };
+
+  // Redirect to EFSMod with id_token (POST) so EFSMod can validate and JIT-provision
+  const handleSrApplicationForm = async () => {
+    try {
+      if (!account) {
+        console.warn("No active account found");
+        return;
+      }
+
+      const result = await instance.acquireTokenSilent({
+        scopes: ["openid", "profile", "email"],
+        account
+      });
+
+      const idToken = result.idToken; // id_token for federation
+      const baseUrl = process.env.NEXT_PUBLIC_EFSMOD_URL || "https://efsmod.example.com";
+      const returnPath = "/profile"; // where EFSMod should send user after SSO
+
+      // Preferred: secure POST to EFSMod SSO endpoint
+      postForm(`${baseUrl}/sso/entra`, {
+        id_token: idToken,
+        return: returnPath,
+        // Optional hints for JIT provisioning
+        email: userInfo?.email || "",
+        name: userInfo?.displayName || userInfo?.name || "",
+        given_name: userInfo?.givenName || "",
+        family_name: userInfo?.surname || ""
+      });
+    } catch (err) {
+      console.error("Failed to acquire id_token for EFSMod redirect:", err);
+      // Fallback: send the user to EFSMod login with prefilled email
+      const baseUrl = process.env.NEXT_PUBLIC_EFSMOD_URL || "https://efsmod.example.com";
+      const email = encodeURIComponent(userInfo?.email || "");
+      const returnPath = encodeURIComponent("/profile");
+      window.location.href = `${baseUrl}/login?return=${returnPath}&email=${email}`;
+    }
   };
 
   return (
@@ -183,6 +221,15 @@ export default function ProfilePage() {
 
               {/* Action Buttons */}
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  onClick={handleSrApplicationForm}
+                  className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 flex items-center justify-center"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  SR Application Form
+                </button>
                 <button
                   onClick={handleBackToHome}
                   className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 flex items-center justify-center"

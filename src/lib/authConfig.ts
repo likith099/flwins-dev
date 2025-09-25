@@ -6,11 +6,11 @@ const msalConfig: Configuration = {
     clientId: process.env.NEXT_PUBLIC_AZURE_AD_CLIENT_ID || "0a37f565-9bea-4bdd-aacf-f0d8f909c096", // Your client ID from the URL
     authority: process.env.NEXT_PUBLIC_AZURE_AD_AUTHORITY || "https://flwins.ciamlogin.com/4cc02933-c81d-4fe9-9f71-850984769f51/v2.0", // Your B2C authority
     redirectUri: process.env.NEXT_PUBLIC_REDIRECT_URI || 
-      (typeof window !== 'undefined' ? window.location.origin : "http://localhost:3001"), // Redirect to home, then navigate to profile
+      (typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : "http://localhost:3002/auth/callback"), // Dedicated callback page
     knownAuthorities: [
       "flwins.ciamlogin.com" // Your B2C custom domain
     ],
-    postLogoutRedirectUri: typeof window !== 'undefined' ? window.location.origin : "http://localhost:3001",
+    postLogoutRedirectUri: typeof window !== 'undefined' ? window.location.origin : "http://localhost:3002",
   },
   cache: {
     cacheLocation: "sessionStorage", // Cache location
@@ -46,9 +46,9 @@ export const loginRequest = {
   scopes: ["openid", "profile", "email"], // Request user profile information
   prompt: "select_account", // Allow user to select account
   redirectUri: process.env.NEXT_PUBLIC_REDIRECT_URI || 
-    (typeof window !== 'undefined' ? window.location.origin : "http://localhost:3001"), // Redirect to home, then navigate to profile
+    (typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : "http://localhost:3002/auth/callback"), // Dedicated callback page
   extraQueryParameters: {
-    response_mode: "query" // Use query mode for B2C compatibility
+    response_mode: "fragment" // Use fragment mode for better client-side handling
   }
 };
 

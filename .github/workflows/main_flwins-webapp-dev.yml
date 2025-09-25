@@ -21,7 +21,7 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '22.x'
+          node-version: "22.x"
 
       - name: npm install and build
         run: |
@@ -34,7 +34,6 @@ jobs:
           NEXT_PUBLIC_KNOWN_AUTHORITY: ${{ secrets.NEXT_PUBLIC_KNOWN_AUTHORITY }}
           NEXT_PUBLIC_AUTHORITY_DOMAIN: ${{ secrets.NEXT_PUBLIC_AUTHORITY_DOMAIN }}
           NEXT_PUBLIC_SIGN_UP_SIGN_IN_POLICY: ${{ secrets.NEXT_PUBLIC_SIGN_UP_SIGN_IN_POLICY }}
-          NEXT_PUBLIC_EFSMOD_URL: ${{ secrets.NEXT_PUBLIC_EFSMOD_URL }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -55,7 +54,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -63,19 +62,19 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_9C5AFCF37115446D949BCCAC9BE06E04 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_19ACDDAB21154634875E875ACFCDC3CC }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'flwins-webapp-dev'
-          slot-name: 'Production'
+          app-name: "flwins-webapp-dev"
+          slot-name: "Production"
           package: .
-      
-      - name: 'Set Azure Web App Settings'
+
+      - name: "Set Azure Web App Settings"
         uses: azure/appservice-settings@v1
         with:
-          app-name: 'flwins-webapp-dev'
-          slot-name: 'Production'
+          app-name: "flwins-webapp-dev"
+          slot-name: "Production"
           app-settings-json: |
             [
               {
@@ -103,10 +102,6 @@ jobs:
                 "value": "${{ secrets.NEXT_PUBLIC_SIGN_UP_SIGN_IN_POLICY }}"
               },
               {
-                "name": "NEXT_PUBLIC_EFSMOD_URL",
-                "value": "${{ secrets.NEXT_PUBLIC_EFSMOD_URL }}"
-              },
-              {
                 "name": "SCM_DO_BUILD_DURING_DEPLOYMENT",
                 "value": "false"
               },
@@ -115,4 +110,3 @@ jobs:
                 "value": "~22"
               }
             ]
-          
