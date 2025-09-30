@@ -28,10 +28,10 @@ jobs:
         run: nuget restore aspnet-get-started.sln
 
       - name: Build ASP.NET MVC Application
-        run: msbuild aspnet-get-started.sln /p:Configuration=Release /p:Platform=AnyCPU
+        run: msbuild aspnet-get-started.sln /p:Configuration=Release /p:Platform="Any CPU"
 
       - name: Publish ASP.NET MVC Application
-        run: msbuild aspnet-get-started\aspnet-get-started.csproj /p:Configuration=Release /p:Platform=AnyCPU /p:DeployOnBuild=true /p:PublishUrl=publish /p:WebPublishMethod=FileSystem
+        run: msbuild aspnet-get-started\aspnet-get-started.csproj /p:Configuration=Release /p:Platform="Any CPU" /p:DeployOnBuild=true /p:PublishUrl=publish /p:WebPublishMethod=FileSystem
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
