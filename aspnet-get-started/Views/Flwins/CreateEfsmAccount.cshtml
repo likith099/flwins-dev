@@ -1,0 +1,119 @@
+@model aspnet_get_started.Controllers.EfsmAccountRequest
+@{
+    ViewBag.Title = "Create EFSM Account";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="glyphicon glyphicon-user-plus"></i> Create EFSM Account
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <p class="text-info">
+                        <i class="glyphicon glyphicon-info-sign"></i>
+                        Please fill out the form below to create a new account in the EFSM system. 
+                        All fields marked with <span class="text-danger">*</span> are required.
+                    </p>
+
+                    @using (Html.BeginForm("CreateEfsmAccount", "Flwins", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FirstName, "First Name *", new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "Enter your first name", required = "required" })
+                                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LastName, "Last Name *", new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Enter your last name", required = "required" })
+                                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, "Email Address *", new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", placeholder = "Enter your email address", required = "required" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Phone, "Phone Number", new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", type = "tel", placeholder = "Enter your phone number" })
+                                @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Organization, "Organization *", new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.Organization, new { @class = "form-control", placeholder = "Enter your organization name", required = "required" })
+                                @Html.ValidationMessageFor(m => m.Organization, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.JobTitle, "Job Title", new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.JobTitle, new { @class = "form-control", placeholder = "Enter your job title" })
+                                @Html.ValidationMessageFor(m => m.JobTitle, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.RequestType, "Request Type *", new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(m => m.RequestType, new SelectList(new[]
+                                {
+                                    new { Value = "", Text = "Select Request Type" },
+                                    new { Value = "NewAccount", Text = "New Account Request" },
+                                    new { Value = "ServiceRequest", Text = "Service Request" },
+                                    new { Value = "DataAccess", Text = "Data Access Request" },
+                                    new { Value = "Training", Text = "Training Access" },
+                                    new { Value = "Other", Text = "Other" }
+                                }, "Value", "Text"), new { @class = "form-control", required = "required" })
+                                @Html.ValidationMessageFor(m => m.RequestType, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Comments, "Additional Comments", new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextAreaFor(m => m.Comments, new { @class = "form-control", rows = "4", placeholder = "Enter any additional comments or special requirements" })
+                                @Html.ValidationMessageFor(m => m.Comments, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-9 col-md-offset-3">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="glyphicon glyphicon-send"></i> Submit Request
+                                </button>
+                                <a href="@Url.Action("Index", "Flwins")" class="btn btn-default btn-lg">
+                                    <i class="glyphicon glyphicon-arrow-left"></i> Cancel
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

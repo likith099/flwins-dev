@@ -1,0 +1,66 @@
+@{
+    ViewBag.Title = "EFSM Account Created Successfully";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="glyphicon glyphicon-ok-circle"></i> Account Created Successfully
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="alert alert-success" role="alert">
+                        <h4><i class="glyphicon glyphicon-ok-sign"></i> Success!</h4>
+                        <p>Your EFSM account has been created successfully. You can now access the EFSM system using the link below.</p>
+                    </div>
+
+                    <div class="well">
+                        <h4>Account Details:</h4>
+                        <p><strong>Account ID:</strong> @ViewBag.EfsmAccountId</p>
+                        <p><strong>Status:</strong> <span class="label label-success">Active</span></p>
+                        <p><strong>Created:</strong> @DateTime.Now.ToString("MMM dd, yyyy HH:mm")</p>
+                    </div>
+
+                    <div class="text-center" style="margin: 30px 0;">
+                        <h4>Ready to Access EFSM System</h4>
+                        <p class="text-muted">Click the button below to be automatically signed in to the EFSM system and redirected to the SR start page.</p>
+                        
+                        <a href="@ViewBag.EfsmRedirectUrl" class="btn btn-success btn-lg" target="_blank">
+                            <i class="glyphicon glyphicon-log-in"></i> Access EFSM System
+                        </a>
+                    </div>
+
+                    <div class="alert alert-info" role="alert">
+                        <h5><i class="glyphicon glyphicon-info-sign"></i> Important Information:</h5>
+                        <ul>
+                            <li>The link above will open the EFSM system in a new tab/window</li>
+                            <li>You will be automatically signed in using your FLWINS credentials</li>
+                            <li>You'll be taken directly to the Service Request (SR) start page</li>
+                            <li>Keep this page open as a reference</li>
+                            <li>If you encounter any issues, please contact support</li>
+                        </ul>
+                    </div>
+
+                    <div class="text-center" style="margin-top: 30px;">
+                        <a href="@Url.Action("Index", "Flwins")" class="btn btn-default">
+                            <i class="glyphicon glyphicon-home"></i> Return to FLWINS Portal
+                        </a>
+                        <a href="@Url.Action("CreateEfsmAccount", "Flwins")" class="btn btn-primary">
+                            <i class="glyphicon glyphicon-plus"></i> Create Another Account
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Optional: Auto-redirect after a delay
+    // setTimeout(function() {
+    //     window.open('@ViewBag.EfsmRedirectUrl', '_blank');
+    // }, 5000); // Redirect after 5 seconds
+</script>

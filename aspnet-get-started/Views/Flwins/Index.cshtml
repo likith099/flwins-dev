@@ -1,0 +1,71 @@
+@{
+    ViewBag.Title = "FLWINS Portal";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h1>FLWINS Portal</h1>
+                <p class="lead">Welcome to the Florida Workforce Investment Network System (FLWINS)</p>
+                <p>Access your workforce development resources and create EFSM system accounts.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="glyphicon glyphicon-user"></i> EFSM Account Management
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <p>Create a new account in the EFSM (Enterprise Financial System Management) to access specialized resources.</p>
+                    <a href="@Url.Action("CreateEfsmAccount", "Flwins")" class="btn btn-primary btn-lg">
+                        <i class="glyphicon glyphicon-plus"></i> Create EFSM Account
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="glyphicon glyphicon-info-sign"></i> System Information
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <p><strong>Welcome:</strong> @ViewBag.DisplayName</p>
+                        <p><strong>Email:</strong> @ViewBag.UserEmail</p>
+                        <p><strong>Authentication:</strong> <span class="text-success">FLWINS Azure AD</span></p>
+                    }
+                    else
+                    {
+                        <p><strong>Status:</strong> <span class="text-warning">Not Authenticated</span></p>
+                    }
+                    <p><strong>Session Time:</strong> @DateTime.Now.ToString("MMM dd, yyyy HH:mm")</p>
+                    <p><strong>System Status:</strong> <span class="text-success">Online</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Recent Activities</h3>
+                </div>
+                <div class="panel-body">
+                    <p>No recent activities to display.</p>
+                    <!-- TODO: Add recent activities list here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
