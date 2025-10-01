@@ -1,0 +1,44 @@
+{
+    "dotnet.preferCSharpExtension": true,
+    
+    // Disable all VS Code sounds
+    "audioCues.enabled": "off",
+    "audioCues.volume": 0,
+    "audioCues.lineHasBreakpoint": "off",
+    "audioCues.lineHasError": "off",
+    "audioCues.lineHasFoldedArea": "off",
+    "audioCues.lineHasInlineSuggestion": "off",
+    "audioCues.lineHasWarning": "off",
+    "audioCues.noInlayHints": "off",
+    "audioCues.notebookCellCompleted": "off",
+    "audioCues.notebookCellFailed": "off",
+    "audioCues.onDebugBreak": "off",
+    "audioCues.taskCompleted": "off",
+    "audioCues.taskFailed": "off",
+    "audioCues.terminalCommandFailed": "off",
+    "audioCues.terminalQuickFix": "off",
+    
+    // Disable notification sounds
+    "workbench.settings.enableNaturalLanguageSearch": false,
+    
+    // Disable Git sounds
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    
+    // Disable GitHub Copilot sounds
+    "github.copilot.enable": {
+        "*": true,
+        "yaml": true,
+        "plaintext": false,
+        "markdown": true
+    },
+    
+    // Disable terminal bell (updated settings)
+    "terminal.integrated.enableVisualBell": false,
+    "accessibility.signals.terminalBell": {
+        "sound": "off"
+    },
+    
+    // Disable other notification sounds
+    "problems.showCurrentInStatus": false
+}
