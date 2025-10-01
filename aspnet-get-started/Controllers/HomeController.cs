@@ -9,6 +9,7 @@ namespace aspnet_get_started.Controllers
 {
     public class HomeController : Controller
     {
+        [AllowAnonymous]
         public ActionResult Index()
         {
             // Set up ViewBag for FLWINS page
@@ -77,12 +78,14 @@ namespace aspnet_get_started.Controllers
             return User.Identity.IsAuthenticated ? (User.Identity.Name ?? "User") : "User";
         }
 
+        [AllowAnonymous]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
