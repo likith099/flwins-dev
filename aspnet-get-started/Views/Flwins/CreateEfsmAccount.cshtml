@@ -1,23 +1,29 @@
 @model aspnet_get_started.Controllers.EfsmAccountRequest
 @{
-    ViewBag.Title = "Create EFSM Account";
+    ViewBag.Title = "Create EFSM Account - FL WINS";
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <i class="glyphicon glyphicon-user-plus"></i> Create EFSM Account
-                    </h3>
+<section class="form-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="form-header text-center">
+                    <h1>Create Your EFSM Account</h1>
+                    <p class="lead">Connect with enterprise financial system management services tailored to your workforce development goals.</p>
                 </div>
-                <div class="panel-body">
-                    <p class="text-info">
-                        <i class="glyphicon glyphicon-info-sign"></i>
-                        Please fill out the form below to create a new account in the EFSM system. 
-                        All fields marked with <span class="text-danger">*</span> are required.
-                    </p>
+                
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <i class="glyphicon glyphicon-user-plus"></i> Account Information
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="alert alert-info">
+                            <i class="glyphicon glyphicon-info-sign"></i>
+                            Please complete the form below to create your EFSM account. This information helps us match you with the most relevant services and programs.
+                            Fields marked with <span class="text-danger">*</span> are required.
+                        </div>
 
                     @using (Html.BeginForm("CreateEfsmAccount", "Flwins", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
@@ -100,19 +106,26 @@
                         <div class="form-group">
                             <div class="col-md-9 col-md-offset-3">
                                 <button type="submit" class="btn btn-primary btn-lg">
-                                    <i class="glyphicon glyphicon-send"></i> Submit Request
+                                    <i class="glyphicon glyphicon-send"></i> Create Account & Connect
                                 </button>
-                                <a href="@Url.Action("Index", "Flwins")" class="btn btn-default btn-lg">
-                                    <i class="glyphicon glyphicon-arrow-left"></i> Cancel
+                                <a href="@Url.Action("Index", "Flwins")" class="btn btn-outline-primary btn-lg">
+                                    <i class="glyphicon glyphicon-arrow-left"></i> Back to Home
                                 </a>
                             </div>
                         </div>
                     }
+                    
+                    <div class="form-help">
+                        <h4>Need Help?</h4>
+                        <p>Our team is here to assist you Monday–Friday, 8 AM–5 PM</p>
+                        <p><strong>Phone:</strong> 1-877-879-1243</p>
+                        <p><strong>Available in:</strong> English, Spanish, and Haitian Creole</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

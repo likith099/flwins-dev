@@ -1,21 +1,30 @@
 @{
-    ViewBag.Title = "EFSM Account Created Successfully";
+    ViewBag.Title = "Account Created Successfully - FL WINS";
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <i class="glyphicon glyphicon-ok-circle"></i> Account Created Successfully
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <div class="alert alert-success" role="alert">
-                        <h4><i class="glyphicon glyphicon-ok-sign"></i> Success!</h4>
-                        <p>Your EFSM account has been created successfully. You can now access the EFSM system using the link below.</p>
+<section class="success-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="success-header text-center">
+                    <div class="success-icon">
+                        <i class="glyphicon glyphicon-ok-circle"></i>
                     </div>
+                    <h1>Welcome to EFSM!</h1>
+                    <p class="lead">Your account has been created successfully, @ViewBag.UserDisplayName</p>
+                </div>
+                
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <i class="glyphicon glyphicon-check"></i> Account Ready
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="success-message">
+                            <h4>🎉 Congratulations!</h4>
+                            <p>Your EFSM (Enterprise Financial System Management) account is now active and ready to use. You can access specialized workforce development services and resources.</p>
+                        </div>
 
                     <div class="well">
                         <h4>Account Details:</h4>

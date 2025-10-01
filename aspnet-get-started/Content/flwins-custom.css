@@ -1,0 +1,521 @@
+/* FL WINS Custom Styles */
+
+/* Color Variables */
+:root {
+    --primary-blue: #003d7a;
+    --secondary-blue: #0066cc;
+    --light-blue: #e6f2ff;
+    --success-green: #28a745;
+    --text-dark: #333333;
+    --text-light: #666666;
+    --border-light: #e0e0e0;
+    --white: #ffffff;
+}
+
+/* Global Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+/* Top Header */
+.top-header {
+    background-color: var(--text-light);
+    color: var(--white);
+    padding: 8px 0;
+    font-size: 14px;
+}
+
+.location-info {
+    color: var(--white);
+    font-weight: 500;
+}
+
+.auth-link {
+    color: var(--white);
+    text-decoration: none;
+    margin: 0 5px;
+    font-weight: 500;
+}
+
+.auth-link:hover {
+    color: var(--light-blue);
+    text-decoration: underline;
+}
+
+.separator {
+    color: var(--white);
+    margin: 0 5px;
+}
+
+.welcome-text {
+    color: var(--white);
+    margin-right: 15px;
+}
+
+/* Main Navigation */
+.main-nav {
+    background-color: var(--white);
+    border-bottom: 3px solid var(--primary-blue);
+    margin-bottom: 0;
+    min-height: 80px;
+}
+
+.main-nav .navbar-brand {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    height: 80px;
+}
+
+.main-nav .logo {
+    height: 50px;
+    margin-right: 10px;
+}
+
+.main-nav .brand-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary-blue);
+}
+
+.main-nav .navbar-nav > li > a {
+    color: var(--text-dark);
+    font-weight: 500;
+    padding: 30px 20px;
+    font-size: 16px;
+}
+
+.main-nav .navbar-nav > li > a:hover {
+    color: var(--primary-blue);
+    background-color: transparent;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
+    padding: 80px 0;
+    min-height: 500px;
+}
+
+.hero-title {
+    font-size: 48px;
+    font-weight: bold;
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: 20px;
+    color: var(--text-light);
+    margin-bottom: 40px;
+    line-height: 1.5;
+}
+
+.auth-buttons {
+    margin-top: 30px;
+}
+
+.auth-buttons p {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 15px 0 10px 0;
+}
+
+.hero-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
+    font-weight: 600;
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 5px;
+    text-transform: none;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-blue);
+    border-color: var(--secondary-blue);
+}
+
+.btn-outline-primary {
+    color: var(--primary-blue);
+    border-color: var(--primary-blue);
+    background-color: transparent;
+    font-weight: 600;
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
+    color: var(--white);
+}
+
+.btn-success {
+    background-color: var(--success-green);
+    border-color: var(--success-green);
+    font-weight: 600;
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+/* Steps Section */
+.steps-section {
+    padding: 80px 0;
+    background-color: var(--white);
+}
+
+.section-title {
+    font-size: 36px;
+    font-weight: bold;
+    color: var(--primary-blue);
+    margin-bottom: 50px;
+}
+
+.step-card {
+    text-align: center;
+    padding: 40px 20px;
+    height: 100%;
+    border: 2px solid var(--border-light);
+    border-radius: 10px;
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+}
+
+.step-card:hover {
+    border-color: var(--primary-blue);
+    box-shadow: 0 5px 20px rgba(0, 61, 122, 0.1);
+    transform: translateY(-5px);
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 auto 20px auto;
+}
+
+.step-card h3 {
+    font-size: 22px;
+    color: var(--primary-blue);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.step-card p {
+    color: var(--text-light);
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+/* Services Section */
+.services-section {
+    padding: 80px 0;
+    background-color: #f8f9fa;
+}
+
+.service-item {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-blue);
+}
+
+.service-item h4 {
+    color: var(--primary-blue);
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.service-match-card {
+    background: linear-gradient(135deg, var(--success-green) 0%, #20c997 100%);
+    color: var(--white);
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    height: 100%;
+}
+
+.service-match-card h3 {
+    color: var(--white);
+    margin-bottom: 20px;
+}
+
+.service-match-card p {
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+/* CTA Section */
+.cta-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+    color: var(--white);
+}
+
+.cta-section h2 {
+    color: var(--white);
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+.cta-section .auth-buttons p {
+    color: var(--white);
+}
+
+.cta-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Footer */
+.main-footer {
+    background-color: var(--text-dark);
+    color: var(--white);
+    padding: 60px 0 30px 0;
+    margin-top: 0;
+}
+
+.footer-logo {
+    margin-bottom: 30px;
+}
+
+.footer-logo-img {
+    height: 60px;
+}
+
+.footer-text {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.footer-links {
+    margin: 30px 0;
+}
+
+.footer-links a {
+    color: var(--white);
+    text-decoration: none;
+    margin: 0 5px;
+    opacity: 0.9;
+}
+
+.footer-links a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.footer-copyright {
+    font-size: 14px;
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid #555;
+    opacity: 0.8;
+}
+
+/* Main Content */
+.main-content {
+    min-height: calc(100vh - 200px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 36px;
+    }
+    
+    .hero-subtitle {
+        font-size: 18px;
+    }
+    
+    .section-title {
+        font-size: 28px;
+    }
+    
+    .step-card {
+        margin-bottom: 20px;
+    }
+    
+    .main-nav .navbar-brand {
+        padding: 10px 0;
+        height: 60px;
+    }
+    
+    .main-nav .logo {
+        height: 40px;
+    }
+    
+    .main-nav .brand-text {
+        font-size: 20px;
+    }
+}
+
+/* Form Styles */
+.form-horizontal .form-group {
+    margin-bottom: 25px;
+}
+
+.form-control {
+    border-radius: 5px;
+    border: 2px solid var(--border-light);
+    padding: 12px 15px;
+    font-size: 16px;
+}
+
+.form-control:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 0.2rem rgba(0, 61, 122, 0.25);
+}
+
+.control-label {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+/* Panel Overrides for Forms */
+.panel-primary > .panel-heading {
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
+}
+
+.panel-success > .panel-heading {
+    background-color: var(--success-green);
+    border-color: var(--success-green);
+}
+
+/* Form Section Styles */
+.form-section {
+    padding: 60px 0;
+    background-color: #f8f9fa;
+}
+
+.form-header {
+    margin-bottom: 40px;
+}
+
+.form-header h1 {
+    color: var(--primary-blue);
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.form-help {
+    margin-top: 40px;
+    padding: 25px;
+    background-color: var(--light-blue);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-blue);
+}
+
+.form-help h4 {
+    color: var(--primary-blue);
+    margin-bottom: 15px;
+}
+
+.form-help p {
+    margin-bottom: 8px;
+    color: var(--text-dark);
+}
+
+/* Success Section Styles */
+.success-section {
+    padding: 60px 0;
+    background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
+}
+
+.success-header {
+    margin-bottom: 40px;
+}
+
+.success-icon {
+    font-size: 80px;
+    color: var(--success-green);
+    margin-bottom: 20px;
+}
+
+.success-header h1 {
+    color: var(--primary-blue);
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.success-message {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.success-message h4 {
+    color: var(--success-green);
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+/* Alert Styles */
+.alert {
+    border-radius: 8px;
+    border: none;
+    padding: 20px;
+}
+
+.alert-info {
+    background-color: #e3f2fd;
+    color: #0277bd;
+    border-left: 4px solid #0288d1;
+}
+
+.alert-success {
+    background-color: #e8f5e8;
+    color: #2e7d32;
+    border-left: 4px solid var(--success-green);
+}
+
+/* Utility Classes */
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.lead {
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+}

@@ -12,17 +12,25 @@ namespace aspnet_get_started.Controllers
 {
     public class FlwinsController : Controller
     {
-        // GET: Flwins - Main dashboard after FLWINS authentication
-        [Authorize]
+        // GET: Flwins - Main home page (public access)
         public ActionResult Index()
         {
-            // Get user information from Azure AD claims
-            var userEmail = User.Identity.Name;
-            var displayName = GetUserDisplayName();
-            
-            ViewBag.Message = $"Welcome to FLWINS Portal, {displayName}";
-            ViewBag.UserEmail = userEmail;
-            ViewBag.DisplayName = displayName;
+            // Check if user is authenticated
+            if (User.Identity.IsAuthenticated)
+            {
+                var userEmail = User.Identity.Name;
+                var displayName = GetUserDisplayName();
+                
+                ViewBag.Message = $"Welcome back, {displayName}";
+                ViewBag.UserEmail = userEmail;
+                ViewBag.DisplayName = displayName;
+                ViewBag.IsAuthenticated = true;
+            }
+            else
+            {
+                ViewBag.Message = "Skill up for a better future.";
+                ViewBag.IsAuthenticated = false;
+            }
             
             return View();
         }

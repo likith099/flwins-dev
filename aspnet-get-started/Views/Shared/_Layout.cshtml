@@ -3,55 +3,103 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - FL WINS</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/flwins-custom.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <!-- Top Header -->
+    <div class="top-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="location-info">US | EN</span>
+                </div>
+                <div class="col-md-6 text-right">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <span class="welcome-text">Welcome, @(User.Identity.Name ?? "User")</span>
+                        <a href="/.auth/logout" class="auth-link">Sign Out</a>
+                    }
+                    else
+                    {
+                        <a href="/.auth/login/aad" class="auth-link">Create Account</a>
+                        <span class="separator">|</span>
+                        <a href="/.auth/login/aad" class="auth-link">Sign in</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="navbar navbar-default navbar-static-top main-nav">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("FLWINS Portal", "Index", "Flwins", new { area = "" }, new { @class = "navbar-brand" })
+                <a class="navbar-brand" href="@Url.Action("Index", "Flwins")">
+                    <img src="~/Content/images/flwins-logo.png" alt="FL WINS" class="logo" />
+                    <span class="brand-text">FL WINS</span>
+                </a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Dashboard", "Index", "Flwins")</li>
-                    <li>@Html.ActionLink("Create EFSM Account", "CreateEfsmAccount", "Flwins")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+            <div class="collapse navbar-collapse" id="main-navbar">
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a href="@Url.Action("Index", "Flwins")">Home</a></li>
                     @if (Request.IsAuthenticated)
                     {
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <i class="glyphicon glyphicon-user"></i> @(User.Identity.Name ?? "User") <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/.auth/logout"><i class="glyphicon glyphicon-log-out"></i> Sign Out</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="@Url.Action("CreateEfsmAccount", "Flwins")">Services</a></li>
+                        <li><a href="@Url.Action("CreateEfsmAccount", "Flwins")">My Account</a></li>
                     }
                     else
                     {
-                        <li><a href="/.auth/login/aad"><i class="glyphicon glyphicon-log-in"></i> Sign In</a></li>
+                        <li><a href="#services">Services</a></li>
                     }
+                    <li><a href="@Url.Action("About", "Home")">About</a></li>
+                    <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
                 </ul>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
+    </nav>
+    <main class="main-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <div class="footer-logo">
+                        <img src="~/Content/images/flwins-logo-footer.png" alt="FL WINS Logo" class="footer-logo-img" />
+                    </div>
+                    <p class="footer-text">
+                        An equal opportunity employer/program. Auxiliary aids and services are available 
+                        upon request to individuals with disabilities. Need help? Call us at 
+                        <strong>1-877-879-1243</strong> — we're here Monday–Friday, 8 AM–5 PM (closed on holidays and during state emergencies). 
+                        Our agents can assist you in English, Spanish, and Haitian Creole.
+                    </p>
+                    <p class="footer-text">
+                        All voice telephone numbers on this website may be reached by persons using 
+                        TTY/TDD equipment via the "Florida Relay Service" at 711.
+                    </p>
+                    <div class="footer-links">
+                        <a href="#privacy">Privacy</a> | 
+                        <a href="#accessibility">Accessibility</a> | 
+                        <a href="#legal">Legal</a>
+                    </div>
+                    <p class="footer-copyright">
+                        &copy; @DateTime.Now.Year FL WINS - Florida Workforce Investment Network System
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
