@@ -1,4 +1,4 @@
-@model aspnet_get_started.Controllers.EfsmAccountRequest
+@model EfsmAccountRequest
 @{
     ViewBag.Title = "Create EFSM Account - FL WINS";
 }
@@ -25,7 +25,7 @@
                             Fields marked with <span class="text-danger">*</span> are required.
                         </div>
 
-                    @using (Html.BeginForm("CreateEfsmAccount", "Flwins", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    @using (Html.BeginForm("CreateEfsmAccount", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
                         
@@ -108,7 +108,7 @@
                                 <button type="submit" class="btn btn-primary btn-lg">
                                     <i class="glyphicon glyphicon-send"></i> Create Account & Connect
                                 </button>
-                                <a href="@Url.Action("Index", "Flwins")" class="btn btn-outline-primary btn-lg">
+                                <a href="@Url.Action("Index", "Home")" class="btn btn-outline-primary btn-lg">
                                     <i class="glyphicon glyphicon-arrow-left"></i> Back to Home
                                 </a>
                             </div>

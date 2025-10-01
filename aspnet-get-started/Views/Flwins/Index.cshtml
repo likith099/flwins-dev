@@ -26,7 +26,7 @@
                 {
                     <div class="auth-buttons">
                         <p><strong>Welcome back, @ViewBag.DisplayName!</strong></p>
-                        <a href="@Url.Action("CreateEfsmAccount", "Flwins")" class="btn btn-primary btn-lg">Access EFSM Services</a>
+                        <a href="@Url.Action("CreateEfsmAccount", "Home")" class="btn btn-primary btn-lg">Access EFSM Services</a>
                     </div>
                 }
             </div>
@@ -49,7 +49,7 @@
                     <div class="step-number">1</div>
                     <h3>Tell us about your goals, interests, and challenges</h3>
                     <p>The more we know about you, your situation, and your goals, the better we will be able to match you with services that will be most beneficial to you.</p>
-                    <a href="@Url.Action("CreateEfsmAccount", "Flwins")" class="btn btn-outline-primary">Create Account</a>
+                    <a href="@Url.Action("CreateEfsmAccount", "Home")" class="btn btn-outline-primary">Create Account</a>
                 </div>
             </div>
             <div class="col-md-4">
@@ -65,7 +65,7 @@
                     <div class="step-number">3</div>
                     <h3>Connect with service-providing agencies</h3>
                     <p>Submit the registration intake form to easily connect with services and resources provided by our partner agencies.</p>
-                    <a href="@Url.Action("CreateEfsmAccount", "Flwins")" class="btn btn-outline-primary">Connect with Services</a>
+                    <a href="@Url.Action("CreateEfsmAccount", "Home")" class="btn btn-outline-primary">Connect with Services</a>
                 </div>
             </div>
         </div>
@@ -98,7 +98,7 @@
                 
                 @if (ViewBag.IsAuthenticated)
                 {
-                    <a href="@Url.Action("CreateEfsmAccount", "Flwins")" class="btn btn-primary">Browse all services</a>
+                    <a href="@Url.Action("CreateEfsmAccount", "Home")" class="btn btn-primary">Browse all services</a>
                 }
                 else
                 {
@@ -111,7 +111,7 @@
                     <p>Service Match looks at all of your information, including your unique situation and goals, and recommends services that can help you achieve your goals!</p>
                     @if (ViewBag.IsAuthenticated)
                     {
-                        <a href="@Url.Action("CreateEfsmAccount", "Flwins")" class="btn btn-success btn-lg">Start your Service Match!</a>
+                        <a href="@Url.Action("CreateEfsmAccount", "Home")" class="btn btn-success btn-lg">Start your Service Match!</a>
                     }
                     else
                     {
@@ -141,7 +141,7 @@
                 else
                 {
                     <p><strong>Ready to get started?</strong></p>
-                    <a href="@Url.Action("CreateEfsmAccount", "Flwins")" class="btn btn-primary btn-lg">Access Your Services</a>
+                    <a href="@Url.Action("CreateEfsmAccount", "Home")" class="btn btn-primary btn-lg">Access Your Services</a>
                 }
             </div>
             <div class="col-md-4">

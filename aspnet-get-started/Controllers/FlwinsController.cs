@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
+using System.Security.Claims;
+using System.Configuration;
+using System.ComponentModel.DataAnnotations;
 
 namespace aspnet_get_started.Controllers
 {
@@ -15,24 +18,35 @@ namespace aspnet_get_started.Controllers
         // GET: Flwins - Main home page (public access)
         public ActionResult Index()
         {
-            // Check if user is authenticated
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                var userEmail = User.Identity.Name;
-                var displayName = GetUserDisplayName();
+                // Check if user is authenticated
+                if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    var userEmail = User.Identity.Name ?? "User";
+                    var displayName = GetUserDisplayName();
+                    
+                    ViewBag.Message = $"Welcome back, {displayName}";
+                    ViewBag.UserEmail = userEmail;
+                    ViewBag.DisplayName = displayName;
+                    ViewBag.IsAuthenticated = true;
+                }
+                else
+                {
+                    ViewBag.Message = "Skill up for a better future.";
+                    ViewBag.IsAuthenticated = false;
+                }
                 
-                ViewBag.Message = $"Welcome back, {displayName}";
-                ViewBag.UserEmail = userEmail;
-                ViewBag.DisplayName = displayName;
-                ViewBag.IsAuthenticated = true;
+                return View();
             }
-            else
+            catch (Exception ex)
             {
+                // Fallback for any errors
                 ViewBag.Message = "Skill up for a better future.";
                 ViewBag.IsAuthenticated = false;
+                ViewBag.Error = ex.Message; // For debugging
+                return View();
             }
-            
-            return View();
         }
 
         // GET: Flwins/CreateEfsmAccount - Form to create EFSM account
@@ -116,7 +130,7 @@ namespace aspnet_get_started.Controllers
             using (var client = new HttpClient())
             {
                 // TODO: Replace with actual EFSM API endpoint
-                var efsmApiUrl = System.Configuration.ConfigurationManager.AppSettings["EfsmApiUrl"] ?? "https://efsm-api.example.com/api/accounts";
+                var efsmApiUrl = ConfigurationManager.AppSettings["EfsmApiUrl"] ?? "https://efsm-api.example.com/api/accounts";
                 
                 var json = JsonConvert.SerializeObject(model);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -153,38 +167,83 @@ namespace aspnet_get_started.Controllers
         // Helper method to get user display name from claims
         private string GetUserDisplayName()
         {
-            var claimsIdentity = User.Identity as System.Security.Claims.ClaimsIdentity;
-            if (claimsIdentity != null)
+            if (User.Identity.IsAuthenticated)
             {
-                var displayName = claimsIdentity.FindFirst("name")?.Value ?? 
-                                claimsIdentity.FindFirst("preferred_username")?.Value ??
-                                claimsIdentity.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value;
-                
-                if (!string.IsNullOrEmpty(displayName))
-                    return displayName;
+                try
+                {
+                    var claimsIdentity = User.Identity as ClaimsIdentity;
+                    if (claimsIdentity != null)
+                    {
+                        var displayName = claimsIdentity.FindFirst("name")?.Value ?? 
+                                        claimsIdentity.FindFirst("preferred_username")?.Value ??
+                                        claimsIdentity.FindFirst(ClaimTypes.Name)?.Value;
+                        
+                        if (!string.IsNullOrEmpty(displayName))
+                            return displayName;
+                    }
+                    
+                    return User.Identity.Name ?? "User";
+                }
+                catch
+                {
+                    return User.Identity.Name ?? "User";
+                }
             }
             
-            return User.Identity.Name ?? "User";
+            return "User";
         }
 
         // Helper method to get specific user claim
         private string GetUserClaim(string claimType)
         {
-            var claimsIdentity = User.Identity as System.Security.Claims.ClaimsIdentity;
-            return claimsIdentity?.FindFirst(claimType)?.Value ?? string.Empty;
+            if (User.Identity.IsAuthenticated)
+            {
+                try
+                {
+                    var claimsIdentity = User.Identity as ClaimsIdentity;
+                    return claimsIdentity?.FindFirst(claimType)?.Value ?? string.Empty;
+                }
+                catch
+                {
+                    return string.Empty;
+                }
+            }
+            return string.Empty;
         }
     }
 
     // Model for EFSM account creation request
     public class EfsmAccountRequest
     {
+        [Required]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email Address")]
         public string Email { get; set; }
+
+        [Phone]
+        [Display(Name = "Phone Number")]
         public string Phone { get; set; }
+
+        [Required]
+        [Display(Name = "Organization")]
         public string Organization { get; set; }
+
+        [Display(Name = "Job Title")]
         public string JobTitle { get; set; }
+
+        [Required]
+        [Display(Name = "Request Type")]
         public string RequestType { get; set; }
+
+        [Display(Name = "Comments")]
         public string Comments { get; set; }
         
         // FLWINS Authentication Information

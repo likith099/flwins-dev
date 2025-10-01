@@ -43,18 +43,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="@Url.Action("Index", "Flwins")">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
                     <img src="~/Content/images/flwins-logo.png" alt="FL WINS" class="logo" />
                     <span class="brand-text">FL WINS</span>
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="main-navbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="@Url.Action("Index", "Flwins")">Home</a></li>
+                    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
                     @if (Request.IsAuthenticated)
                     {
-                        <li><a href="@Url.Action("CreateEfsmAccount", "Flwins")">Services</a></li>
-                        <li><a href="@Url.Action("CreateEfsmAccount", "Flwins")">My Account</a></li>
+                        <li><a href="@Url.Action("CreateEfsmAccount", "Home")">Services</a></li>
+                        <li><a href="@Url.Action("CreateEfsmAccount", "Home")">My Account</a></li>
                     }
                     else
                     {
