@@ -80,6 +80,21 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-md-3 control-label" for="CommonIntakeForm">Common Intake Form *</label>
+                            <div class="col-md-9">
+                                <select id="CommonIntakeForm" name="CommonIntakeForm" class="form-control" required>
+                                    <option value="">Select Intake Form</option>
+                                    <option value="standard">Standard Intake Form</option>
+                                    <option value="expedited">Expedited Processing Form</option>
+                                    <option value="renewal">Account Renewal Form</option>
+                                    <option value="transfer">Account Transfer Form</option>
+                                    <option value="special">Special Circumstances Form</option>
+                                </select>
+                                <span class="help-block">Choose the form that best matches your request.</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             @Html.LabelFor(m => m.RequestType, "Request Type *", new { @class = "col-md-3 control-label" })
                             <div class="col-md-9">
                                 @Html.DropDownListFor(m => m.RequestType, new SelectList(new[]
