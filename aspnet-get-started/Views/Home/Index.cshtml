@@ -1,31 +1,121 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "FL WINS - Home";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h1 class="hero-title">Skill up for a better future.</h1>
+                <p class="hero-subtitle">
+                    Discover services and support to learn in-demand skills and grow your career. 
+                    Allowing the Program to understand your specific needs and find other services that may be suitable for you.
+                </p>
+                
+                @if (ViewBag.IsAuthenticated != true)
+                {
+                    <div class="auth-buttons">
+                        <p><strong>Are you new?</strong></p>
+                        <a href="/.auth/login/aad" class="btn btn-primary btn-lg">Create account</a>
+                        <p class="mt-3"><strong>Already have an account?</strong></p>
+                        <a href="/.auth/login/aad" class="btn btn-outline-primary btn-lg">Sign in</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="auth-buttons">
+                        <p><strong>Welcome back, @ViewBag.DisplayName!</strong></p>
+                        <a href="@Url.Action("CreateEfsmAccount", "Home")" class="btn btn-primary btn-lg">Access EFSM Services</a>
+                    </div>
+                }
+            </div>
+            <div class="col-md-4">
+                <div class="hero-image">
+                    <div class="placeholder-image" style="height: 300px; background: #f0f0f0; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #666;">
+                        Professional Development Image
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<!-- Steps Section -->
+<section class="steps-section">
+    <div class="container">
+        <h2 class="section-title text-center">Start your journey with three simple steps.</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Tell us about your goals, interests, and challenges</h3>
+                    <p>The more we know about you, your situation, and your goals, the better we will be able to match you with services that will be most beneficial to you.</p>
+                    <a href="@Url.Action("CreateEfsmAccount", "Home")" class="btn btn-outline-primary">Create Account</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Match with career-building services for you</h3>
+                    <p>Browse all the services and programs provided by our partner agencies, or let our smart match guide you toward the ones we recommend just for you.</p>
+                    <a href="#services" class="btn btn-outline-primary">Match with Services</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Connect with service-providing agencies</h3>
+                    <p>Submit the registration intake form to easily connect with services and resources provided by our partner agencies.</p>
+                    <a href="@Url.Action("CreateEfsmAccount", "Home")" class="btn btn-outline-primary">Connect with Services</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="services-section">
+    <div class="container">
+        <h2 class="section-title">Services</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Overcome Challenges</h3>
+                <p>Our programs are tailored to both your goals and your situation. No matter what challenges and opportunities you face, we're here to help you succeed.</p>
+                
+                <div class="service-item">
+                    <h4>EFSM Account Management</h4>
+                    <p>Access enterprise financial system management services and create specialized accounts for workforce development programs.</p>
+                </div>
+                
+                <div class="service-item">
+                    <h4>Job and Career Counseling</h4>
+                    <p>Access job search and career counseling services that help you achieve your employment goals.</p>
+                </div>
+                
+                @if (ViewBag.IsAuthenticated == true)
+                {
+                    <a href="@Url.Action("CreateEfsmAccount", "Home")" class="btn btn-primary">Browse all services</a>
+                }
+                else
+                {
+                    <a href="/.auth/login/aad" class="btn btn-primary">Browse all services</a>
+                }
+            </div>
+            <div class="col-md-6">
+                <div class="service-match-card">
+                    <h3>Service Match</h3>
+                    <p>Service Match looks at all of your information, including your unique situation and goals, and recommends services that can help you achieve your goals!</p>
+                    @if (ViewBag.IsAuthenticated == true)
+                    {
+                        <a href="@Url.Action("CreateEfsmAccount", "Home")" class="btn btn-success btn-lg">Start your Service Match!</a>
+                    }
+                    else
+                    {
+                        <a href="/.auth/login/aad" class="btn btn-success btn-lg">Start your Service Match!</a>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+</section>

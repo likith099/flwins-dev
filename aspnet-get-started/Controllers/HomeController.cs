@@ -14,12 +14,12 @@ namespace aspnet_get_started.Controllers
         {
             // Set up ViewBag for FLWINS page
             ViewBag.Message = "Skill up for a better future.";
-            ViewBag.IsAuthenticated = User.Identity.IsAuthenticated;
-            ViewBag.DisplayName = User.Identity.IsAuthenticated ? (User.Identity.Name ?? "User") : "Guest";
-            ViewBag.UserEmail = User.Identity.IsAuthenticated ? User.Identity.Name : "";
+            ViewBag.IsAuthenticated = User?.Identity?.IsAuthenticated ?? false;
+            ViewBag.DisplayName = (User?.Identity?.IsAuthenticated == true) ? (User.Identity.Name ?? "User") : "Guest";
+            ViewBag.UserEmail = (User?.Identity?.IsAuthenticated == true) ? User.Identity.Name : "";
             
-            // Return the FLWINS view directly from Home controller
-            return View("~/Views/Flwins/Index.cshtml");
+            // Return the regular Home Index view (now with FLWINS content)
+            return View();
         }
 
         [Authorize]

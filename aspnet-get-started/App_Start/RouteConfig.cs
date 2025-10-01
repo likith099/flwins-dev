@@ -13,17 +13,10 @@ namespace aspnet_get_started
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            // Public route (tries to avoid authentication issues)
-            routes.MapRoute(
-                name: "Public",
-                url: "public/{action}",
-                defaults: new { controller = "Public", action = "Index" }
-            );
-
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Public", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
