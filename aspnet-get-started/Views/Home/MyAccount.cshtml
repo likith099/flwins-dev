@@ -1,0 +1,85 @@
+@{
+    ViewBag.Title = "My Account - FL WINS";
+}
+
+<section class="account-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="account-header text-center">
+                    <h1>My Account</h1>
+                    <p class="lead">Manage your FLWINS profile and access your services</p>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <i class="glyphicon glyphicon-user"></i> Profile Information
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="profile-info">
+                                    <div class="info-item">
+                                        <strong>Full Name:</strong>
+                                        <span>@ViewBag.UserName</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <strong>Email Address:</strong>
+                                        <span>@ViewBag.UserEmail</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <strong>Account Type:</strong>
+                                        <span>FLWINS User</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <strong>Last Login:</strong>
+                                        <span>@ViewBag.LoginTime</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <i class="glyphicon glyphicon-cog"></i> Account Services
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="service-links">
+                                    <a href="@Url.Action("CreateEfsmAccount", "Home")" class="btn btn-primary btn-block">
+                                        <i class="glyphicon glyphicon-plus"></i> Create EFSM Account
+                                    </a>
+                                    <a href="#" class="btn btn-info btn-block">
+                                        <i class="glyphicon glyphicon-file"></i> Common Intake Form
+                                    </a>
+                                    <a href="@Url.Action("Index", "Home")" class="btn btn-default btn-block">
+                                        <i class="glyphicon glyphicon-home"></i> Back to Home
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Recent Activity</h3>
+                            </div>
+                            <div class="panel-body">
+                                <p>No recent activities to display.</p>
+                                <small class="text-muted">Your account activities and service requests will appear here.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

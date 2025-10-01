@@ -20,13 +20,13 @@
                     @if (Request.IsAuthenticated)
                     {
                         <span class="welcome-text">Welcome, @(User.Identity.Name ?? "User")</span>
-                        <a href="/.auth/logout" class="auth-link">Sign Out</a>
+                        <a href="/.auth/logout?post_logout_redirect_uri=@Html.Raw(System.Web.HttpUtility.UrlEncode(Request.Url.GetLeftPart(System.UriPartial.Authority)))" class="auth-link">Sign Out</a>
                     }
                     else
                     {
-                        <a href="/.auth/login/aad" class="auth-link">Create Account</a>
+                        <a href="/.auth/login/aad?post_login_redirect_uri=@Html.Raw(System.Web.HttpUtility.UrlEncode(Request.Url.GetLeftPart(System.UriPartial.Authority)))" class="auth-link">Create Account</a>
                         <span class="separator">|</span>
-                        <a href="/.auth/login/aad" class="auth-link">Sign in</a>
+                        <a href="/.auth/login/aad?post_login_redirect_uri=@Html.Raw(System.Web.HttpUtility.UrlEncode(Request.Url.GetLeftPart(System.UriPartial.Authority)))" class="auth-link">Sign in</a>
                     }
                 </div>
             </div>
@@ -45,7 +45,7 @@
                 </button>
                 <a class="navbar-brand" href="@Url.Action("Index", "Home")">
                     <img src="~/Content/images/flwins-logo.png" alt="FL WINS" class="logo" />
-                    <span class="brand-text">FL WINS</span>
+                    <span class="brand-text"></span>
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="main-navbar">
@@ -54,7 +54,7 @@
                     @if (Request.IsAuthenticated)
                     {
                         <li><a href="@Url.Action("CreateEfsmAccount", "Home")">Services</a></li>
-                        <li><a href="@Url.Action("CreateEfsmAccount", "Home")">My Account</a></li>
+                        <li><a href="@Url.Action("MyAccount", "Home")">My Account</a></li>
                     }
                     else
                     {

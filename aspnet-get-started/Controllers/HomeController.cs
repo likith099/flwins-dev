@@ -33,7 +33,10 @@ namespace aspnet_get_started.Controllers
                 Email = User.Identity.IsAuthenticated ? User.Identity.Name : ""
             };
             
-            return View("~/Views/Flwins/CreateEfsmAccount.cshtml", model);
+            ViewBag.UserEmail = User.Identity.IsAuthenticated ? User.Identity.Name : "";
+            ViewBag.UserName = GetUserDisplayName();
+            
+            return View(model);
         }
 
         [HttpPost]
@@ -51,7 +54,9 @@ namespace aspnet_get_started.Controllers
                 return RedirectToAction("EfsmAccountCreated");
             }
 
-            return View("~/Views/Flwins/CreateEfsmAccount.cshtml", model);
+            ViewBag.UserEmail = User.Identity.IsAuthenticated ? User.Identity.Name : "";
+            ViewBag.UserName = GetUserDisplayName();
+            return View(model);
         }
 
         [Authorize]
@@ -71,6 +76,16 @@ namespace aspnet_get_started.Controllers
             ViewBag.UserDisplayName = userDisplayName ?? GetUserDisplayName();
             
             return View("~/Views/Flwins/EfsmAccountCreated.cshtml");
+        }
+
+        [Authorize]
+        public ActionResult MyAccount()
+        {
+            ViewBag.UserName = GetUserDisplayName();
+            ViewBag.UserEmail = User.Identity.Name;
+            ViewBag.LoginTime = DateTime.Now.ToString("MMM dd, yyyy HH:mm");
+            
+            return View();
         }
 
         private string GetUserDisplayName()

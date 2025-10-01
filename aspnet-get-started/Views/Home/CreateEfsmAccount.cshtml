@@ -1,0 +1,152 @@
+@model dynamic
+@{
+    ViewBag.Title = "Create EFSM Account - FL WINS";
+}
+
+<section class="service-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="service-header text-center">
+                    <h1>Create EFSM Account</h1>
+                    <p class="lead">Set up your Electronic Federal State Management (EFSM) account to access specialized services</p>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <i class="glyphicon glyphicon-user"></i> Account Information
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <form id="efsmAccountForm" method="post">
+                                    <div class="form-group">
+                                        <label for="firstName" class="control-label">First Name *</label>
+                                        <input type="text" class="form-control" id="firstName" name="firstName" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="lastName" class="control-label">Last Name *</label>
+                                        <input type="text" class="form-control" id="lastName" name="lastName" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="email" class="control-label">Email Address *</label>
+                                        <input type="email" class="form-control" id="email" name="email" value="@ViewBag.UserEmail" readonly>
+                                        <small class="help-block">This email is automatically set from your logged-in account.</small>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="organization" class="control-label">Organization</label>
+                                        <input type="text" class="form-control" id="organization" name="organization" placeholder="Your organization or department">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="jobTitle" class="control-label">Job Title</label>
+                                        <input type="text" class="form-control" id="jobTitle" name="jobTitle" placeholder="Your job title or position">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="commonIntakeForm" class="control-label">Common Intake Form *</label>
+                                        <select class="form-control" id="commonIntakeForm" name="commonIntakeForm" required>
+                                            <option value="">Please select a form type</option>
+                                            <option value="standard">Standard Intake Form</option>
+                                            <option value="expedited">Expedited Processing Form</option>
+                                            <option value="renewal">Account Renewal Form</option>
+                                            <option value="transfer">Account Transfer Form</option>
+                                            <option value="special">Special Circumstances Form</option>
+                                        </select>
+                                        <small class="help-block">Select the appropriate intake form based on your account needs.</small>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="purpose" class="control-label">Purpose of Account</label>
+                                        <textarea class="form-control" id="purpose" name="purpose" rows="3" placeholder="Briefly describe why you need this EFSM account..."></textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                                                I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a> *
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-primary btn-lg">
+                                            <i class="glyphicon glyphicon-ok"></i> Create Account
+                                        </button>
+                                        <a href="@Url.Action("Index", "Home")" class="btn btn-default btn-lg">
+                                            <i class="glyphicon glyphicon-arrow-left"></i> Cancel
+                                        </a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <i class="glyphicon glyphicon-info-sign"></i> Account Benefits
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="benefits-list">
+                                    <li><i class="glyphicon glyphicon-check text-success"></i> Access to specialized federal services</li>
+                                    <li><i class="glyphicon glyphicon-check text-success"></i> Streamlined application processes</li>
+                                    <li><i class="glyphicon glyphicon-check text-success"></i> Priority support and assistance</li>
+                                    <li><i class="glyphicon glyphicon-check text-success"></i> Secure document management</li>
+                                    <li><i class="glyphicon glyphicon-check text-success"></i> Real-time status updates</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <i class="glyphicon glyphicon-exclamation-sign"></i> Important Notes
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <p><strong>Processing Time:</strong> Account creation typically takes 1-2 business days.</p>
+                                <p><strong>Verification:</strong> You may be contacted for additional verification.</p>
+                                <p><strong>Support:</strong> For questions, contact our support team at <a href="mailto:support@flwins.gov">support@flwins.gov</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+$(document).ready(function() {
+    $('#efsmAccountForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        // Basic validation
+        if (!$('#firstName').val() || !$('#lastName').val() || !$('#email').val() || 
+            !$('#commonIntakeForm').val() || !$('#agreeTerms').is(':checked')) {
+            alert('Please fill in all required fields and agree to the terms.');
+            return false;
+        }
+        
+        // Show loading state
+        var submitBtn = $(this).find('button[type="submit"]');
+        var originalText = submitBtn.html();
+        submitBtn.html('<i class="glyphicon glyphicon-refresh glyphicon-spin"></i> Creating Account...').prop('disabled', true);
+        
+        // Simulate form submission (replace with actual AJAX call)
+        setTimeout(function() {
+            alert('Account creation request submitted successfully! You will receive a confirmation email shortly.');
+            window.location.href = '@Url.Action("Index", "Home")';
+        }, 2000);
+    });
+});
+</script>
