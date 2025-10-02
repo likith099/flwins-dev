@@ -51,14 +51,10 @@
             <div class="collapse navbar-collapse" id="main-navbar">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li><a href="@Url.Action("Services", "Home")">Services</a></li>
                     @if (Request.IsAuthenticated)
                     {
-                        <li><a href="@Url.Action("CreateEfsmAccount", "Home")">Services</a></li>
                         <li><a href="@Url.Action("MyAccount", "Home")">My Account</a></li>
-                    }
-                    else
-                    {
-                        <li><a href="@Url.Action("Services", "Home")">Services</a></li>
                     }
                     <li><a href="@Url.Action("About", "Home")">About</a></li>
                     <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
