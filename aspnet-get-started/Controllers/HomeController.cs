@@ -147,6 +147,56 @@ namespace aspnet_get_started.Controllers
         }
 
         [Authorize]
+        public ActionResult AccessEfsmPortal()
+        {
+            try
+            {
+                var efsmProvisionUrl = System.Configuration.ConfigurationManager.AppSettings["EfsmProvisionUrl"];
+                var efsmPortalPath = "/Home/FamilyPortal"; // Target EFSM Family Portal
+
+                if (string.IsNullOrWhiteSpace(efsmProvisionUrl))
+                {
+                    // Fallback: redirect directly to EFSM Family Portal
+                    return Redirect("https://efsmod-dev-egcyb2bahcdkamdm.canadacentral-01.azurewebsites.net/Home/FamilyPortal");
+                }
+
+                var payload = new
+                {
+                    email = User.Identity.Name,
+                    displayName = GetUserDisplayName(),
+                    redirectPath = efsmPortalPath,
+                    autoCreateAccount = true,
+                    autoLogin = true
+                };
+
+                using (var http = new HttpClient())
+                {
+                    var json = JsonConvert.SerializeObject(payload);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    var response = http.PostAsync(efsmProvisionUrl, content).Result;
+                    var body = response.Content.ReadAsStringAsync().Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var efsmResult = JsonConvert.DeserializeObject<EfsmProvisionResponse>(body);
+                        if (efsmResult != null && !string.IsNullOrWhiteSpace(efsmResult.ssoUrl))
+                        {
+                            // Redirect to EFSM with automatic login
+                            return Redirect(efsmResult.ssoUrl);
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // If provisioning fails, redirect directly to EFSM Family Portal
+            }
+
+            // Fallback: direct redirect to EFSM Family Portal
+            return Redirect("https://efsmod-dev-egcyb2bahcdkamdm.canadacentral-01.azurewebsites.net/Home/FamilyPortal");
+        }
+
+        [Authorize]
         public ActionResult MyAccount()
         {
             ViewBag.UserName = GetUserDisplayName();
