@@ -1,0 +1,159 @@
+@{
+    ViewBag.Title = "Services - FL WINS";
+}
+
+<section class="services-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="services-header text-center">
+                    <h1>FLWINS Services</h1>
+                    <p class="lead">Access workforce development tools and resources to advance your career</p>
+                </div>
+                
+                @if (ViewBag.IsAuthenticated)
+                {
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="panel panel-primary service-card">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <i class="glyphicon glyphicon-user-plus"></i> EFSM Account Creation
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <p>Create your Electronic Federal State Management (EFSM) account to access specialized workforce development services and resources.</p>
+                                    
+                                    <div class="service-features">
+                                        <ul>
+                                            <li><i class="glyphicon glyphicon-check text-success"></i> Access to federal programs</li>
+                                            <li><i class="glyphicon glyphicon-check text-success"></i> Streamlined application processes</li>
+                                            <li><i class="glyphicon glyphicon-check text-success"></i> Priority support services</li>
+                                            <li><i class="glyphicon glyphicon-check text-success"></i> Secure document management</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="service-actions">
+                                        <a href="@Url.Action("CreateEfsmAccount", "Home")" class="btn btn-primary btn-lg">
+                                            <i class="glyphicon glyphicon-arrow-right"></i> Create EFSM Account
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="panel panel-info service-card">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <i class="glyphicon glyphicon-file-text"></i> Common Intake Form
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <p>Complete your intake process with our standardized form to ensure you receive the most appropriate services for your needs.</p>
+                                    
+                                    <div class="service-features">
+                                        <ul>
+                                            <li><i class="glyphicon glyphicon-check text-success"></i> Personalized service matching</li>
+                                            <li><i class="glyphicon glyphicon-check text-success"></i> Faster processing times</li>
+                                            <li><i class="glyphicon glyphicon-check text-success"></i> Comprehensive needs assessment</li>
+                                            <li><i class="glyphicon glyphicon-check text-success"></i> Priority scheduling</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="service-actions">
+                                        <a href="@Url.Action("CreateEfsmAccount", "Home")" class="btn btn-info btn-lg">
+                                            <i class="glyphicon glyphicon-arrow-right"></i> Access Intake Form
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <i class="glyphicon glyphicon-info-sign"></i> Additional Resources
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h5><i class="glyphicon glyphicon-phone"></i> Contact Support</h5>
+                                            <p>Need help? Our support team is available Monday–Friday, 8 AM–5 PM.</p>
+                                            <p><strong>Phone:</strong> 1-877-879-1243</p>
+                                            <p><strong>Languages:</strong> English, Spanish, Haitian Creole</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h5><i class="glyphicon glyphicon-book"></i> Documentation</h5>
+                                            <p>Access guides and resources to help you navigate our services.</p>
+                                            <a href="#" class="btn btn-default btn-sm">View Guides</a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h5><i class="glyphicon glyphicon-calendar"></i> Schedule Appointment</h5>
+                                            <p>Book a one-on-one consultation with our specialists.</p>
+                                            <a href="#" class="btn btn-default btn-sm">Schedule Now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <div class="panel panel-warning login-required">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <i class="glyphicon glyphicon-lock"></i> Sign In Required
+                                    </h3>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <h4>Access Your FLWINS Services</h4>
+                                    <p class="lead">Sign in to your account to access personalized workforce development services and resources.</p>
+                                    
+                                    <div class="login-features">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h5><i class="glyphicon glyphicon-user-plus text-primary"></i> EFSM Account Creation</h5>
+                                                <p class="small">Create specialized federal program accounts</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5><i class="glyphicon glyphicon-file-text text-info"></i> Common Intake Forms</h5>
+                                                <p class="small">Streamlined service application process</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h5><i class="glyphicon glyphicon-dashboard text-success"></i> Account Dashboard</h5>
+                                                <p class="small">Track your applications and progress</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5><i class="glyphicon glyphicon-phone text-warning"></i> Priority Support</h5>
+                                                <p class="small">Direct access to specialist assistance</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="login-actions">
+                                        <a href="/.auth/login/aad?post_login_redirect_uri=@Html.Raw(System.Web.HttpUtility.UrlEncode(Request.Url.GetLeftPart(System.UriPartial.Authority) + "/Home/Services"))" class="btn btn-primary btn-lg">
+                                            <i class="glyphicon glyphicon-log-in"></i> Sign In to Access Services
+                                        </a>
+                                        <p class="small text-muted" style="margin-top: 15px;">
+                                            Use your organizational credentials to sign in securely.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

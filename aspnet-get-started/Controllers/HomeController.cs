@@ -137,6 +137,15 @@ namespace aspnet_get_started.Controllers
             return View("~/Views/Flwins/EfsmAccountCreated.cshtml");
         }
 
+        [AllowAnonymous]
+        public ActionResult Services()
+        {
+            ViewBag.IsAuthenticated = User?.Identity?.IsAuthenticated ?? false;
+            ViewBag.UserName = GetUserDisplayName();
+            
+            return View();
+        }
+
         [Authorize]
         public ActionResult MyAccount()
         {

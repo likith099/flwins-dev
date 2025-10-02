@@ -575,6 +575,77 @@ body {
     border-color: var(--secondary-blue);
 }
 
+/* Services Page Styles */
+.services-section {
+    padding: 40px 0;
+    background-color: #f8f9fa;
+}
+
+.services-header {
+    margin-bottom: 40px;
+}
+
+.services-header h1 {
+    color: var(--primary-blue);
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.service-card {
+    height: 100%;
+    margin-bottom: 30px;
+}
+
+.service-card .panel-body {
+    padding: 25px;
+}
+
+.service-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.service-features li {
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+}
+
+.service-features li i {
+    margin-right: 10px;
+    width: 16px;
+}
+
+.service-actions {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e9ecef;
+}
+
+.login-required {
+    margin-top: 30px;
+}
+
+.login-features {
+    margin: 30px 0;
+}
+
+.login-features h5 {
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.login-features .small {
+    color: var(--text-light);
+    margin-bottom: 20px;
+}
+
+.login-actions {
+    margin-top: 30px;
+}
+
 /* Service Page Styles */
 .service-section {
     padding: 40px 0;
