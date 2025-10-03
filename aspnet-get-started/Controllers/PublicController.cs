@@ -1,4 +1,9 @@
 
+using System.Web.Mvc;
+
+namespace aspnet_get_started.Controllers
+{
+    public class PublicController : Controller
     {
         // Completely public controller for anonymous access
         
