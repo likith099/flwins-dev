@@ -151,49 +151,27 @@ namespace aspnet_get_started.Controllers
         {
             try
             {
-                var efsmProvisionUrl = System.Configuration.ConfigurationManager.AppSettings["EfsmProvisionUrl"];
-                var efsmPortalPath = "/Home/FamilyPortal"; // Target EFSM Family Portal
-
-                if (string.IsNullOrWhiteSpace(efsmProvisionUrl))
-                {
-                    // Fallback: redirect directly to EFSM Family Portal
-                    return Redirect("https://efsmod-dev-egcyb2bahcdkamdm.canadacentral-01.azurewebsites.net/Home/FamilyPortal");
-                }
-
-                var payload = new
-                {
-                    email = User.Identity.Name,
-                    displayName = GetUserDisplayName(),
-                    redirectPath = efsmPortalPath,
-                    autoCreateAccount = true,
-                    autoLogin = true
-                };
-
-                using (var http = new HttpClient())
-                {
-                    var json = JsonConvert.SerializeObject(payload);
-                    var content = new StringContent(json, Encoding.UTF8, "application/json");
-                    var response = http.PostAsync(efsmProvisionUrl, content).Result;
-                    var body = response.Content.ReadAsStringAsync().Result;
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var efsmResult = JsonConvert.DeserializeObject<EfsmProvisionResponse>(body);
-                        if (efsmResult != null && !string.IsNullOrWhiteSpace(efsmResult.ssoUrl))
-                        {
-                            // Redirect to EFSM with automatic login
-                            return Redirect(efsmResult.ssoUrl);
-                        }
-                    }
-                }
+                // TEMPORARY FIX: Direct SSO redirect to EFSM with Azure AD login
+                // This bypasses the Provision API until it's implemented on EFSM side
+                
+                var efsmBaseUrl = "https://efsmod-dev-egcyb2bahcdkamdm.canadacentral-01.azurewebsites.net";
+                var familyPortalPath = "/Home/FamilyPortal";
+                var redirectUrl = System.Web.HttpUtility.UrlEncode($"{efsmBaseUrl}{familyPortalPath}");
+                var ssoUrl = $"{efsmBaseUrl}/.auth/login/aad?post_login_redirect_url={redirectUrl}";
+                
+                // Log user access for debugging
+                System.Diagnostics.Trace.TraceInformation($"FLWINS->EFSM SSO: User {User.Identity.Name} accessing EFSM via {ssoUrl}");
+                
+                return Redirect(ssoUrl);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // If provisioning fails, redirect directly to EFSM Family Portal
+                // Log error and fallback
+                System.Diagnostics.Trace.TraceError($"FLWINS->EFSM SSO Error: {ex.Message}");
+                
+                // Fallback: direct redirect to EFSM Family Portal
+                return Redirect("https://efsmod-dev-egcyb2bahcdkamdm.canadacentral-01.azurewebsites.net/Home/FamilyPortal");
             }
-
-            // Fallback: direct redirect to EFSM Family Portal
-            return Redirect("https://efsmod-dev-egcyb2bahcdkamdm.canadacentral-01.azurewebsites.net/Home/FamilyPortal");
         }
 
         [Authorize]
