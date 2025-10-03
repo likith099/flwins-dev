@@ -151,25 +151,80 @@ namespace aspnet_get_started.Controllers
         {
             try
             {
-                // TEMPORARY FIX: Direct SSO redirect to EFSM with Azure AD login
-                // This bypasses the Provision API until it's implemented on EFSM side
-                
                 var efsmBaseUrl = "https://efsmod-dev-egcyb2bahcdkamdm.canadacentral-01.azurewebsites.net";
-                var familyPortalPath = "/Home/FamilyPortal";
-                var redirectUrl = System.Web.HttpUtility.UrlEncode($"{efsmBaseUrl}{familyPortalPath}");
-                var ssoUrl = $"{efsmBaseUrl}/.auth/login/aad?post_login_redirect_url={redirectUrl}";
                 
-                // Log user access for debugging
-                System.Diagnostics.Trace.TraceInformation($"FLWINS->EFSM SSO: User {User.Identity.Name} accessing EFSM via {ssoUrl}");
+                // First, try to call the EFSM Provision API if it exists
+                var efsmProvisionUrl = System.Configuration.ConfigurationManager.AppSettings["EfsmProvisionUrl"];
                 
-                return Redirect(ssoUrl);
+                if (!string.IsNullOrWhiteSpace(efsmProvisionUrl))
+                {
+                    var payload = new
+                    {
+                        email = User.Identity.Name,
+                        displayName = GetUserDisplayName(),
+                        redirectPath = "/Home/FamilyPortal",
+                        autoCreateAccount = true,
+                        autoLogin = true,
+                        source = "flwins"
+                    };
+
+                    using (var http = new HttpClient())
+                    {
+                        // Add authentication headers for EFSM API
+                        var sharedSecret = System.Configuration.ConfigurationManager.AppSettings["FlwinsSharedSecret"] ?? "default-shared-secret";
+                        http.DefaultRequestHeaders.Add("X-FLWINS-Secret", sharedSecret);
+                        http.DefaultRequestHeaders.Add("X-FLWINS-Source", "flwins-portal");
+                        
+                        var json = JsonConvert.SerializeObject(payload);
+                        var content = new StringContent(json, Encoding.UTF8, "application/json");
+                        
+                        // Set timeout to avoid hanging
+                        http.Timeout = TimeSpan.FromSeconds(10);
+                        
+                        var response = http.PostAsync(efsmProvisionUrl, content).Result;
+                        
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var body = response.Content.ReadAsStringAsync().Result;
+                            var efsmResult = JsonConvert.DeserializeObject<EfsmProvisionResponse>(body);
+                            
+                            if (efsmResult != null && !string.IsNullOrWhiteSpace(efsmResult.ssoUrl))
+                            {
+                                // Log successful provisioning
+                                System.Diagnostics.Trace.TraceInformation($"FLWINS->EFSM Provision Success: User {User.Identity.Name} provisioned, redirecting to {efsmResult.ssoUrl}");
+                                return Redirect(efsmResult.ssoUrl);
+                            }
+                        }
+                        else
+                        {
+                            System.Diagnostics.Trace.TraceWarning($"EFSM Provision API returned {response.StatusCode}, falling back to manual redirect");
+                        }
+                    }
+                }
+                
+                // Fallback: Create a special EFSM URL that includes FLWINS user info
+                var userInfo = new
+                {
+                    email = User.Identity.Name,
+                    displayName = GetUserDisplayName(),
+                    source = "flwins",
+                    timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+                };
+                
+                var userInfoJson = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(userInfo)));
+                var efsmAutoProvisionUrl = $"{efsmBaseUrl}/AutoProvision?token={userInfoJson}&redirect=/Home/FamilyPortal";
+                
+                // Log the fallback attempt
+                System.Diagnostics.Trace.TraceInformation($"FLWINS->EFSM Fallback: User {User.Identity.Name} using auto-provision URL");
+                
+                return Redirect(efsmAutoProvisionUrl);
             }
             catch (Exception ex)
             {
-                // Log error and fallback
-                System.Diagnostics.Trace.TraceError($"FLWINS->EFSM SSO Error: {ex.Message}");
+                // Log error and use final fallback
+                System.Diagnostics.Trace.TraceError($"FLWINS->EFSM Error: {ex.Message}");
                 
-                // Fallback: direct redirect to EFSM Family Portal
+                // Final fallback: direct redirect to EFSM Family Portal
                 return Redirect("https://efsmod-dev-egcyb2bahcdkamdm.canadacentral-01.azurewebsites.net/Home/FamilyPortal");
             }
         }
